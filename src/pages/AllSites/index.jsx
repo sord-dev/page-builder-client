@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import lodash from 'lodash'
 import { useAppContext } from '../../context/appContext'
+import { PageBuilder } from '../../components'
+
+import { encodeToBase64 } from '../../utils'
+import { useNavigate } from 'react-router-dom'
 
 function AllSites() {
-    const [pageState, setPageState] = useState({ components: [], template: [] })
+    const [pageState, setPageState] = useState({ components: [], template: [], link: null })
     const { appState } = useAppContext()
-
-    const encodeData = (data) => {
-        return btoa(JSON.stringify(data))
-    }
+    const navigate = useNavigate()
 
     const onComponentClick = (component) => {
         if (!component) return
-        setPageState(prev => ({ ...prev, template: [...pageState.template, component] }))
+        setPageState(prev => ({ ...prev, template: [component, ...pageState.template] }))
     }
 
+    const resetTemplate = () => {
+        setPageState(prev => ({ ...prev, template: [] }))
+    }
 
     const buildPage = (components, userValues) => {
         let processComponent = components.map((c, i) => {
@@ -27,9 +31,13 @@ function AllSites() {
         return { components: processComponent };
     }
 
-    useEffect(() => {
-        console.log(pageState.template)
-    }, [pageState])
+    const buildLink = (components) => {
+        if (!components.length) return
+        const pageData = buildPage(components, {})
+        const base64Data = encodeToBase64(pageData)
+
+        return `/sites/render?data=${base64Data}`
+    }
 
     useEffect(() => {
         if (!appState.components.index) return
@@ -43,20 +51,13 @@ function AllSites() {
             <p>You're to build a site from state using this menu, there will be a list of components and a submit button in which you can use to then generate and navigate to the site you've built</p>
 
             <div>
-                <h4>Components</h4>
-                <ul>
-                    {pageState.components.map((c, i) => {
-                        return <li key={i} onClick={() => onComponentClick(c)}>{c.type}</li>
-                    })}
-                </ul>
-
-                <button onClick={() => {
-                    const fakePage = buildPage(pageState.template, {})
-                    const encodedData = encodeData(fakePage)
-                    window.location.href = `/sites/render?data=${encodedData}`
-                }
-                }>Build Site</button>
-
+                <PageBuilder {...{
+                    template: pageState.template,
+                    updateTemplate: onComponentClick,
+                    components: pageState.components,
+                    submitTemplate: () => navigate(buildLink(pageState.template)),
+                    resetTemplate: () => resetTemplate()
+                }} />
             </div>
         </div>
     )

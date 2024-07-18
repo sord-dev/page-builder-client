@@ -29,7 +29,7 @@ const determineComponentType = (component) => {
   return customComponent;
 };
 
-function PageRender({ templateData, updateComponentIndex }) {
+function PageRender({ templateData, updateComponentIndex, style }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function PageRender({ templateData, updateComponentIndex }) {
   };
 
   return (
-    <div>
+    <div style={style}>
       {/* Render loaded components */}
       {renderComponents()}
     </div>
