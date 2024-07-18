@@ -1,0 +1,55 @@
+.componentPicker {
+    position: fixed;
+    z-index: 1000;
+    top: 26px;
+    right: 26px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1200px;
+
+    opacity: .4;
+
+    background-color: black;
+    border-radius: 6px;
+    padding: 6px 12px;
+
+    transition: opacity .3s;
+}
+
+.componentPicker:hover {
+ opacity: 1;
+}
+
+.componentPickerControls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.componentPicker h4 {
+    color: white;
+    margin: 0;
+}
+
+
+.componentPicker ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+}
+
+.componentPicker ul li {
+    list-style-type: none;
+    margin: 0 6px;
+    cursor: pointer;
+
+    color: white;
+}
+
+.componentPicker ul li:hover {
+    text-decoration: underline;
+}

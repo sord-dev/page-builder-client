@@ -1,41 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import * as library from "../../lib/component-lib"
+import React from 'react'
+import { ComponentsPicker, PreviewMenu } from './partials'
 
-function PageBuilder({ templateData, updateComponentIndex }) {
-  const [template, setTemplate] = useState(templateData || { components: [] });
-
-  useEffect(() => {
-    updateComponentIndex(Object.keys(library).filter(key => key !== 'default')); // indexing all exported components in the library to AppContext state
-    setTemplate(templateData);
-  }, [templateData]);
-
-  const renderComponents = () => {
-    if (!template || !template.components.length) {
-      return <div>Loading template...</div>; // Display a placeholder
-    }
-
-    return template.components.map((component, index) => {
-      try {
-        const Component = library[component.type];
-
-        if (!Component) {
-          throw new Error(`Component ${component.type} not found`);
-        }
-
-        return (<Component {...component.props} key={`${component.type}-${index}`} />);
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    });
-  };
+function PageBuilder({ template, updateTemplate, components, submitTemplate, resetTemplate }) {
 
   return (
     <div>
-      {/* Render loaded components */}
-      {renderComponents()}
+      <ComponentsPicker {...{ updateTemplate, components, submitTemplate, resetTemplate }} />
+      <PreviewMenu {...{ template }} />
     </div>
-  );
+  )
 }
 
-export default PageBuilder;
+PageBuilder.defaultProps = {
+  template: [],
+  updateTemplate: (prevTemplates) => { console.log(prevTemplates) },
+  components: []
+}
+
+export default PageBuilder

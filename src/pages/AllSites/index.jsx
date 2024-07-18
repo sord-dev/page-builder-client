@@ -1,58 +1,67 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import lodash from 'lodash'
 import { useAppContext } from '../../context/appContext'
+import { PageBuilder } from '../../components'
 
-const components = [{ type: 'ContactForm', props: {} }, { type: 'HeadingWith4IconsAndArrows', props: { title: 'string', icon: [] } }, { type: 'HeadingWith6Icons', props: { title: 'string', icon: [] } }] // temporary data, will be from a context or api
+import { encodeToBase64 } from '../../utils'
+import { useNavigate } from 'react-router-dom'
 
 function AllSites() {
+    const [pageState, setPageState] = useState({ components: [], template: [], link: null })
     const { appState } = useAppContext()
-    
-    const encodeData = (data) => {
-        return btoa(JSON.stringify(data))
+    const navigate = useNavigate()
+
+    const onComponentClick = (component) => {
+        if (!component) return
+        setPageState(prev => ({ ...prev, template: [component, ...pageState.template] }))
     }
 
-    const buildFakePage = (components, userValues) => {
+    const resetTemplate = () => {
+        setPageState(prev => ({ ...prev, template: [] }))
+    }
 
+    const buildPage = (components, userValues) => {
         let processComponent = components.map((c, i) => {
             const componentData = lodash.cloneDeep(c)
             componentData.props = lodash.merge(componentData.props, userValues)
 
-            
             return componentData
         })
-        
-        console.log(processComponent)
 
         return { components: processComponent };
     }
 
+    const buildLink = (components) => {
+        if (!components.length) return
+        const pageData = buildPage(components, {})
+        const base64Data = encodeToBase64(pageData)
+
+        return `/sites/render?data=${base64Data}`
+    }
+
+    useEffect(() => {
+        if (!appState.components.index) return
+
+        setPageState(prev => ({ ...prev, components: appState.components.index }));
+    }, [appState])
+
     return (
         <div>
-            <h3>All Sites</h3>
-            {appState.components.index && <p>Available components: {appState.components.index.join(', ')}</p>}
-            <p>(temporary data encoder)</p>
-            <ul>
-                {components?.map((component, index) => (
-                    <li key={index}>
-                        <a href={`/sites/render?data=${encodeData(buildFakePage([component], {
-                            title: 'test title', icon: [{
-                                icon: null,
-                                title: "Title goes here",
-                                desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta neque, officia rerum cum voluptatum asperiores quos! Dolor, ipsa ea eos laborum laboriosam doloribus voluptate quisquam sequi molestiae temporibus officia eveniet?",
-                            }]
-                        }))}`}>{component.type}</a>
-                    </li>
-                ))}
-                <a href={`/sites/render?data=${encodeData(buildFakePage([components[0], components[1], components[2]], {
-                            title: 'test title', icon: [{
-                                icon: null,
-                                title: "Title goes here",
-                                desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta neque, officia rerum cum voluptatum asperiores quos! Dolor, ipsa ea eos laborum laboriosam doloribus voluptate quisquam sequi molestiae temporibus officia eveniet?",
-                            }]
-                        }))}`}>bomba</a>
-            </ul>
+            <h3>Link-based Site builder</h3>
+            <p>You're to build a site from state using this menu, there will be a list of components and a submit button in which you can use to then generate and navigate to the site you've built</p>
+
+            <div>
+                <PageBuilder {...{
+                    template: pageState.template,
+                    updateTemplate: onComponentClick,
+                    components: pageState.components,
+                    submitTemplate: () => navigate(buildLink(pageState.template)),
+                    resetTemplate: () => resetTemplate()
+                }} />
+            </div>
         </div>
     )
 }
+
 
 export default AllSites
