@@ -5,7 +5,7 @@ function PageBuilder({ templateData, updateComponentIndex }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
   useEffect(() => {
-    updateComponentIndex(Object.keys(library).filter(key => key !== 'default'));
+    updateComponentIndex(Object.keys(library).filter(key => key !== 'default')); // indexing all exported components in the library to AppContext state
     setTemplate(templateData);
   }, [templateData]);
 
