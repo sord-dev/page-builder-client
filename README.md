@@ -1,9 +1,7 @@
 # Client-Side Page Builder
-
 A ReactJS page builder that uses an external component library.
 
 ## How we're rendering templates
-
 Currently uses Base64 encoding to read template data from url params. 
 Then imports all components from a url library and renders them out. Only allows for very basic templates given the rendering function is not recourrisve.
 
@@ -51,6 +49,8 @@ function PageBuilder({ templateData, updateComponentIndex }) {
 export default PageBuilder;
 ```
 
-## Limitations 
+## Approach Limitations 
 
 - Very large url parameters
+- Cannot handle nested compoents
+- Cannot handle generic compoennts (at the moment)
