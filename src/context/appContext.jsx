@@ -4,8 +4,12 @@ import React, { createContext, useContext, useState } from 'react';
 const AppContext = createContext(null);
 
 const defaultAppState = {
-    components: { index: null }
+    components: {
+        index:
+            [{ type: 'ContactForm', props: {} }, { type: 'HeadingWith4IconsAndArrows', props: { title: 'string', icon: [] } }, { type: 'HeadingWith6Icons', props: { title: 'string', icon: [] } }]
+    }
 }
+
 
 export const AppContextProvider = ({ children }) => {
     defaultAppState.components.index = JSON.parse(localStorage.getItem('componentsList')) || null;

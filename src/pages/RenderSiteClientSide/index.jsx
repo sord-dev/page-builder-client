@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PageBuilder } from '../../components';
+import { PageRender } from '../../components';
 import { useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
 
@@ -29,7 +29,7 @@ function RenderSiteClientSide() {
             <h1>Dynamic Components</h1>
             {templateData.loading && <div>Loading...</div>}
             {templateData.error && <div>Error: {templateData.error.message}</div>}
-            {templateData.data && <PageBuilder templateData={templateData.data} updateComponentIndex={updateComponentIndex} />}
+            {templateData.data && <PageRender templateData={templateData.data} updateComponentIndex={updateComponentIndex} />}
         </>
     );
 }
