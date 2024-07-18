@@ -1,6 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import * as library from "../../lib/component-lib"
 
+const renderJSXComponent = (component) => {
+  if (!component || !component.type) {
+    return null;
+  }
+
+  const Component = determineComponentType(component);
+
+  if (!Component) {
+    return null;
+  }
+
+  return Component
+}
+
+const determineComponentType = (component) => {
+  if (!component || !component.type) {
+    return null;
+  }
+
+  const customComponent = library[component.type]; 
+
+  if (!customComponent) {
+    return React.createElement(component.type, component.props);
+  }
+
+  return customComponent;
+};
+
 function PageBuilder({ templateData, updateComponentIndex }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
@@ -16,7 +44,7 @@ function PageBuilder({ templateData, updateComponentIndex }) {
 
     return template.components.map((component, index) => {
       try {
-        const Component = library[component.type];
+        const Component = renderJSXComponent(component);
 
         if (!Component) {
           throw new Error(`Component ${component.type} not found`);
