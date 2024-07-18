@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as library from "../../lib/component-lib"
+import * as library from "huskio-component-library"
 
 const renderJSXComponent = (component) => {
   if (!component || !component.type) {
