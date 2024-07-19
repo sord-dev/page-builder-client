@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import lodash from 'lodash'
 import { useAppContext } from '../../context/appContext'
 import { PageBuilder } from '../../components'
 
-import { encodeToBase64 } from '../../utils'
+import { buildLink } from '../../utils'
 import { useNavigate } from 'react-router-dom'
 
 function AllSites() {
-    const [pageState, setPageState] = useState({ components: [], template: [], link: null })
-    const { appState } = useAppContext()
-    const navigate = useNavigate()
+    const [pageState, setPageState] = useState({ components: [], template: [], link: null });
+    const { appState } = useAppContext();
+    const navigate = useNavigate();
 
     const onComponentClick = (component) => {
     if (!component) return;
@@ -36,25 +35,6 @@ function AllSites() {
         setPageState(prev => ({ ...prev, template: [] }))
     }
 
-    const buildPage = (components, userValues) => {
-        let processComponent = components.map((c, i) => {
-            const componentData = lodash.cloneDeep(c)
-            componentData.props = lodash.merge(componentData.props, userValues)
-
-            return componentData
-        })
-
-        return { components: processComponent };
-    }
-
-    const buildLink = (components) => {
-        if (!components.length) return
-        const pageData = buildPage(components, {})
-        const base64Data = encodeToBase64(pageData)
-
-        return `/sites/render?data=${base64Data}`
-    }
-
     useEffect(() => {
         if (!appState.components.index) return
 
@@ -73,7 +53,7 @@ function AllSites() {
                     components: pageState.components,
                     updateTemplateItem: updateComponentTemplateItem,
                     submitTemplate: () => navigate(buildLink(pageState.template)),
-                    resetTemplate: () => resetTemplate()
+                    resetTemplate: () => resetTemplate(),
                 }} />
             </div>
         </div>

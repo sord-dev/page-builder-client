@@ -109,3 +109,9 @@
     padding: 0;
     line-height: 12px;
 }
+
+.toggleButton {
+    position: fixed;
+    bottom: 26px;
+    right: 26px;
+}
