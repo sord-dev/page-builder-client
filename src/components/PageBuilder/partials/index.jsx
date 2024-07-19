@@ -50,61 +50,68 @@ const ComponentButton = ({ component, updateTemplate }) => {
 const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
     const [localProps, setLocalProps] = useState(props);
 
-    const handleChange = (e, itemIndex, subKey) => {
+    useEffect(() => {
+        setLocalProps(props);
+    }, [props]);
+
+    const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
-        
-        if (itemIndex !== null && subKey !== null) {
-            setLocalProps(prevProps => ({
-                ...prevProps,
-                [name]: prevProps[name].map((item, idx) =>
-                    idx === itemIndex ? { ...item, [subKey]: value } : item
-                )
-            }));
-        } else {
-            setLocalProps(prevProps => ({
-                ...prevProps,
-                [name]: value
-            }));
-        }
+
+        setLocalProps(prevProps => {
+            if (itemIndex !== null && subKey !== null) {
+                return {
+                    ...prevProps,
+                    [name]: prevProps[name].map((item, idx) =>
+                        idx === itemIndex ? { ...item, [subKey]: value } : item
+                    )
+                };
+            } else {
+                return {
+                    ...prevProps,
+                    [name]: value
+                };
+            }
+        });
     };
 
     const handleConfirm = () => {
         updateTemplateItem({ type, props: localProps }, index);
     };
 
-    useEffect(() => {
-        setLocalProps(props);
-    }, [props]);
+    const renderArrayItem = (key, item, itemIndex) => (
+        <div key={itemIndex} className={styles.propEditor}>
+            {Object.keys(item).map(subKey => (
+                <div className={styles['prop-item']} key={subKey}>
+                    <label>{`${key}[${itemIndex}].${subKey}`}</label>
+                    <input
+                        type="text"
+                        name={key}
+                        value={item[subKey]}
+                        onChange={(e) => handleChange(e, itemIndex, subKey)}
+                    />
+                </div>
+            ))}
+        </div>
+    );
+
+    const renderInput = (key, value) => (
+        <input
+            type="text"
+            name={key}
+            value={value}
+            onChange={(e) => handleChange(e)}
+        />
+    );
 
     return (
         <div className={styles.propEditorMain}>
             {Object.keys(localProps).map(key => (
                 <div key={key} className={styles.propEditor}>
                     <label>{key}</label>
-                    {Array.isArray(localProps[key]) ? (
-                        localProps[key].map((item, itemIndex) => (
-                            <div key={itemIndex} className={styles.propEditor}>
-                                {Object.keys(item).map(subKey => (
-                                    <div className={styles['prop-item']} key={subKey}>
-                                        <label>{`${key}[${itemIndex}].${subKey}`}</label>
-                                        <input
-                                            type="text"
-                                            name={key}
-                                            value={item[subKey]}
-                                            onChange={(event) => handleChange(event, itemIndex, subKey)}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        ))
-                    ) : (
-                        <input
-                            type="text"
-                            name={key}
-                            value={localProps[key]}
-                            onChange={(event) => handleChange(event, null, null)}
-                        />
-                    )}
+                    {Array.isArray(localProps[key])
+                        ? localProps[key].map((item, itemIndex) => renderArrayItem(key, item, itemIndex))
+                        : renderInput(key, localProps[key])
+                    }
                 </div>
             ))}
             <button onClick={handleConfirm}>Confirm Changes</button>
