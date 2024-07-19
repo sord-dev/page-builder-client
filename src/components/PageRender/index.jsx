@@ -31,7 +31,7 @@ const determineComponentType = (component) => {
   return CustomComponent;
 };
 
-function PageRender({ templateData, updateComponentIndex, style, handleComponentClick }) {
+function PageRender({ templateData, updateComponentIndex, style, handleComponentClick = () => {} }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
   useEffect(() => {
@@ -41,11 +41,6 @@ function PageRender({ templateData, updateComponentIndex, style, handleComponent
     updateComponentIndex(indexedComponents); // Indexing all exported components in the library to AppContext state
     setTemplate(templateData);
   }, [templateData]);
-
-  const handleClick = ({ component, index }) => {
-    console.log({ component, index });
-    handleComponentClick({ component, index });
-  };
 
   const componentRefs = useComponentRefs(template.components, handleComponentClick);
 

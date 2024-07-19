@@ -13,7 +13,7 @@ function AllSites() {
 
     const onComponentClick = (component) => {
         if (!component) return
-        setPageState(prev => ({ ...prev, template: [component, ...pageState.template] }))
+        setPageState(prev => ({ ...prev, template: [...pageState.template, component] }))
     }
 
     const resetTemplate = () => {
