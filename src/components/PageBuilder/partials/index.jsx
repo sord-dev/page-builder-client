@@ -1,5 +1,4 @@
 import PageRender from "../../PageRender"
-
 import styles from '../styles.module.css';
 
 export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate, selectedComponent }) => {
@@ -7,8 +6,8 @@ export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, r
         <>
             <div className={styles.componentPicker}>
                 <h4>Components</h4>
-                <ul>
-                    {components.map((c, i) => <li key={i}><ComponentButton component={c} updateTemplate={updateTemplate} /></li>)}
+                <ul className={styles.componentGrid}>
+                    {components.map((c, i) => <ComponentButton component={c} updateTemplate={updateTemplate} key={i} />)}
                 </ul>
 
                 <div className={styles.componentPickerControls}>
