@@ -42,7 +42,7 @@ function AllSites() {
     }, [appState])
 
     return (
-        <div>
+        <div className='site-builder'>
             <h3>Link-based Site builder</h3>
             <p>You're to build a site from state using this menu, there will be a list of components and a submit button in which you can use to then generate and navigate to the site you've built</p>
 
