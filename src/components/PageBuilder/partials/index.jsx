@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import PageRender from "../../PageRender";
-=======
-import PageRender from "../../PageRender"
->>>>>>> 4ef24d23e6b96b3aeb3d8c5de457605799622ccb
 import styles from '../styles.module.css';
 
 export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate, selectedComponent, setSelectedComponent, updateTemplateItem }) => {
