@@ -12,9 +12,10 @@ function AllSites() {
     const navigate = useNavigate()
 
     const onComponentClick = (component) => {
-        if (!component) return
-        setPageState(prev => ({ ...prev, template: [component, ...pageState.template] }))
-    }
+    if (!component) return;
+    setPageState(prev => ({ ...prev, template: [...pageState.template, component] }));
+}
+
 
     const resetTemplate = () => {
         setPageState(prev => ({ ...prev, template: [] }))

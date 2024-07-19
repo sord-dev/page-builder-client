@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as library from "huskio-component-library"
+import * as library from "../../lib/component-library"
 
 const renderJSXComponent = (component) => {
   if (!component || !component.type) {
@@ -46,11 +46,15 @@ function PageRender({ templateData, updateComponentIndex, style }) {
 
     return template.components.map((component, index) => {
       try {
-        const Component = renderJSXComponent(component);
+        const ref = React.createRef();
+
+        const Component = renderJSXComponent(component, ref);
 
         if (!Component) {
           throw new Error(`Component ${component.type} not found`);
         }
+        
+        console.log(Component)
 
         return (<Component {...component.props} key={`${component.type}-${index}`} />);
       } catch (error) {
