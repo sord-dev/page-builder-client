@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Route, Routes } from 'react-router-dom';
 import { RenderSite, RenderSiteClientSide, AllSites } from './pages';
+import { useAppContext } from './context/appContext';
+import { returnAllComponentNames } from './utils';
 
 function App() {
+  const { updateComponentIndex } = useAppContext()
+
+  useEffect(() => {
+    const components = returnAllComponentNames();
+    updateComponentIndex(components)
+  }, [])
+
+
   return (
     <>
       <Routes>
