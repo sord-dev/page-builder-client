@@ -3,19 +3,31 @@ import PageRender from "../../PageRender";
 import styles from '../styles.module.css';
 
 export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const togglePicker = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <>
-            <div className={styles.componentPicker}>
-                <h4>Components</h4>
-                <ul className={styles.componentGrid}>
-                    {components.map((c, i) => <ComponentButton component={c} updateTemplate={updateTemplate} key={i} />)}
-                </ul>
-
-                <div className={styles.componentPickerControls}>
-                    <button onClick={resetTemplate}>Reset Template</button>
-                    <button onClick={submitTemplate}>Submit Site</button>
+            <button onClick={togglePicker} className={styles.toggleButton}>
+                {isOpen ? 'Close Components Picker' : 'Open Components Picker'}
+            </button>
+            {isOpen && (
+                <div className={styles.componentPicker}>
+                    <h4>Components</h4>
+                    <ul className={styles.componentGrid}>
+                        {components.map((c, i) => (
+                            <ComponentButton component={c} updateTemplate={updateTemplate} key={i} />
+                        ))}
+                    </ul>
+                    <div className={styles.componentPickerControls}>
+                        <button onClick={resetTemplate}>Reset Template</button>
+                        <button onClick={submitTemplate}>Submit Site</button>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };
@@ -133,7 +145,7 @@ export const PreviewMenu = ({ template, handleComponentClick }) => {
             templateData={{ components: template }}
             updateComponentIndex={() => { }}
             handleComponentClick={handleComponentClick}
-            style={{ 'scale': '.5', 'marginTop': '0' }}
+            style={{ 'scale': '.5', 'marginTop': '0', "transform": "translateY(-50%)" }}
         />
     );
 };

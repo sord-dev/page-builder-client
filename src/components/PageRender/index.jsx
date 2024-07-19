@@ -71,7 +71,7 @@ function PageRender({ templateData, style, handleComponentClick = () => {} }) {
   };
 
   return (
-    <div style={style}>
+    <div className='main' style={style}>
       {/* Render loaded components */}
       {renderComponents()}
     </div>
