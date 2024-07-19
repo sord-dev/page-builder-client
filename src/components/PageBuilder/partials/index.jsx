@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PageRender from "../../PageRender";
 import styles from '../styles.module.css';
 
-export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate, selectedComponent, setSelectedComponent, updateTemplateItem }) => {
+export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate }) => {
     return (
         <>
             <div className={styles.componentPicker}>
@@ -16,27 +16,6 @@ export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, r
                     <button onClick={submitTemplate}>Submit Site</button>
                 </div>
             </div>
-
-            <div className={styles.componentStateEditor}>
-                {selectedComponent ? (
-                    <div className={styles.selectedComponent}>
-                        <div className={styles['heading']}>
-                            <h4>Selected Component</h4>
-                            <button onClick={() => setSelectedComponent(null)}>&times;</button>
-                        </div>
-                        <h2>{selectedComponent.component.type}</h2>
-                        <p>Props</p>
-                        <PropsEditor 
-                            type={selectedComponent.component.type}
-                            props={selectedComponent.component.props} 
-                            index={selectedComponent.index} 
-                            updateTemplateItem={updateTemplateItem}
-                        />
-                    </div>
-                ) : (
-                    <div>No component selected</div>
-                )}
-            </div>
         </>
     );
 };
@@ -47,12 +26,41 @@ const ComponentButton = ({ component, updateTemplate }) => {
     );
 };
 
+export const PropsEditorMenu = ({ selectedComponent, updateTemplateItem, setSelectedComponent }) => {
+    return (
+        <div className={styles.componentStateEditor}>
+            {selectedComponent ? (
+                <div className={styles.selectedComponent}>
+                    <div className={styles['heading']}>
+                        <h4>Selected Component</h4>
+                        <button onClick={() => setSelectedComponent(null)}>&times;</button>
+                    </div>
+                    <h2>{selectedComponent.component.type}</h2>
+                    <p>Props</p>
+
+                    <PropsEditor
+                        type={selectedComponent.component.type}
+                        props={selectedComponent.component.props}
+                        index={selectedComponent.index}
+                        updateTemplateItem={updateTemplateItem}
+                    />
+                </div>
+            ) : (
+                <div>No component selected</div>
+            )}
+        </div>
+    );
+};
+
+
 const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
     const [localProps, setLocalProps] = useState(props);
 
     useEffect(() => {
         setLocalProps(props);
     }, [props]);
+
+    if(localProps.length <= 0) return 'No props found.';
 
     const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
@@ -121,11 +129,11 @@ const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
 
 export const PreviewMenu = ({ template, handleComponentClick }) => {
     return (
-        <PageRender 
-            templateData={{ components: template }} 
-            updateComponentIndex={() => {}} 
-            handleComponentClick={handleComponentClick} 
-            style={{ 'scale': '.5', 'marginTop': '0' }} 
+        <PageRender
+            templateData={{ components: template }}
+            updateComponentIndex={() => { }}
+            handleComponentClick={handleComponentClick}
+            style={{ 'scale': '.5', 'marginTop': '0' }}
         />
     );
 };

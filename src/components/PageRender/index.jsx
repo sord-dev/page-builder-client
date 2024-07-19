@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import * as library from "huskio-component-library";
+import React, { useState, useEffect } from 'react';
+import * as library from '../../lib/component-library';
+
 import { useComponentRefs } from '../PageBuilder/utils';
 
 const renderJSXComponent = (component) => {
@@ -24,21 +25,16 @@ const determineComponentType = (component) => {
   const CustomComponent = library[component.type];
 
   if (!CustomComponent) {
-    // If component type is not found in the library, treat it as a built-in HTML element
-    return component.type;
+    throw new Error(`Component ${component.type} not found`);
   }
 
   return CustomComponent;
 };
 
-function PageRender({ templateData, updateComponentIndex, style, handleComponentClick = () => {} }) {
+function PageRender({ templateData, style, handleComponentClick = () => {} }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
   useEffect(() => {
-    const indexedComponents = Object.keys(library)
-      .filter(key => key !== 'default')
-      .map(key => ({ type: key, props: library[key].defaultProps || {} }));
-    updateComponentIndex(indexedComponents); // Indexing all exported components in the library to AppContext state
     setTemplate(templateData);
   }, [templateData]);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentsPicker, PreviewMenu } from './partials';
+import { ComponentsPicker, PreviewMenu, PropsEditorMenu } from './partials';
 
 function PageBuilder({
   template = [],
@@ -22,17 +22,17 @@ function PageBuilder({
 
   return (
     <div>
-      <ComponentsPicker 
-        {...{ 
-          updateTemplate, 
-          components, 
-          submitTemplate, 
-          resetTemplate, 
-          selectedComponent, 
-          setSelectedComponent, 
-          updateTemplateItem
-        }} 
+      <ComponentsPicker
+        {...{
+          updateTemplate,
+          components,
+          submitTemplate,
+          resetTemplate: resetPageTemplate,
+        }}
       />
+
+      <PropsEditorMenu {...{ selectedComponent, setSelectedComponent, updateTemplateItem }} />
+
       <PreviewMenu {...{ template, handleComponentClick: selectComponent }} />
     </div>
   );

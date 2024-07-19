@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import * as library from 'huskio-component-library'
+import * as library from '../lib/component-library'
 
 export const encodeToBase64 = (data) => {
     return btoa(JSON.stringify(data))
@@ -7,7 +7,10 @@ export const encodeToBase64 = (data) => {
 
 export const returnAllComponentNames = () => {
     return Object.keys(library).filter(key => key !== 'default')
-        .map(key => ({ type: key, props: library[key].defaultProps || {} }));
+        .map(key => {
+            console.log(library[key])
+            return ({ type: key, props: library[key].defaultProps || {} })
+        });
 }
 
 export const buildLink = (components) => {

@@ -54,7 +54,6 @@ function AllSites() {
                     updateTemplateItem: updateComponentTemplateItem,
                     submitTemplate: () => navigate(buildLink(pageState.template)),
                     resetTemplate: () => resetTemplate(),
-                    updateComponentTemplateItem
                 }} />
             </div>
         </div>
