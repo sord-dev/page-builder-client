@@ -1,4 +1,5 @@
-.componentPicker {
+.componentPicker,
+.componentStateEditor {
     position: fixed;
     z-index: 1000;
     top: 26px;
@@ -19,7 +20,17 @@
     transition: opacity .3s;
 }
 
-.componentPicker:hover {
+.componentStateEditor {
+    top: unset;
+    right: unset;
+    bottom: 26px;
+    left: 26px;
+
+    padding: 6px 12px;
+}
+
+.componentPicker:hover,
+.componentStateEditor:hover {
  opacity: 1;
 }
 
