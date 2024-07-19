@@ -21,11 +21,10 @@
 }
 
 .componentStateEditor {
-    top: unset;
+    top: 26px;
     right: unset;
     bottom: 26px;
     left: 26px;
-
     padding: 6px 12px;
 }
 
@@ -69,3 +68,44 @@
     text-decoration: underline;
 }
 
+.selectedComponent {
+    height: 100%;
+    overflow: hidden;
+}
+
+.propEditorMain {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.propEditor {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.prop-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.heading > button {
+    height: 24px;
+    width: 24px;
+    padding: 0;
+    line-height: 12px;
+}
