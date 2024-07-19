@@ -1,4 +1,5 @@
-.componentPicker {
+.componentPicker,
+.componentStateEditor {
     position: fixed;
     z-index: 1000;
     top: 26px;
@@ -19,7 +20,17 @@
     transition: opacity .3s;
 }
 
-.componentPicker:hover {
+.componentStateEditor {
+    top: unset;
+    right: unset;
+    bottom: 26px;
+    left: 26px;
+
+    padding: 6px 12px;
+}
+
+.componentPicker:hover,
+.componentStateEditor:hover {
  opacity: 1;
 }
 
@@ -27,17 +38,19 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    margin-top: 12px;
 }
 
-.componentPicker h4 {
+.componentGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
     color: white;
-    margin: 0;
+    gap: 6px;
+    margin: 6px 0;
 }
 
 
 .componentPicker ul {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     padding: 0;
 }
@@ -47,9 +60,12 @@
     margin: 0 6px;
     cursor: pointer;
 
+    font-size: .8em;
+
     color: white;
 }
 
 .componentPicker ul li:hover {
     text-decoration: underline;
 }
+
