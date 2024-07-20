@@ -3,9 +3,7 @@ import * as library from '../../../lib/component-library';
 import { ComponentWrapper } from '../partials';
 
 export const renderComponents = ({ template, previewMode, componentRefs, appendComponent, components }) => {
-    if (!template || !template.components.length) {
-        return <div>No components added to state.</div>; // Display a placeholder
-    }
+    if (!template || !template.components.length) return;
 
     componentRefs.current = []; // Clear previous refs
 

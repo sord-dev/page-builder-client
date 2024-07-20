@@ -40,7 +40,7 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
 }
 
 
-const AppendComponentButton = ({ onSubmit = (component) => { console.log('appending', component) }, components }) => {
+export const AppendComponentButton = ({ onSubmit = (component) => { console.log('appending', component) }, components }) => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleMenuToggle = () => {
