@@ -148,12 +148,14 @@ const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemplateIte
     );
 };
 
-export const PreviewMenu = ({ template, handleComponentClick }) => {
+export const PreviewMenu = ({ template, handleComponentClick, updateTemplate, components }) => {
     return (
         <PageRender
             templateData={{ components: template }}
             updateComponentIndex={() => { }}
             handleComponentClick={handleComponentClick}
+            appendComponent={updateTemplate}
+            components={components}
             style={{ 'scale': '.5', 'marginTop': '0', "transform": "translateY(-50%)" }}
             previewMode
         />

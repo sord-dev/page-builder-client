@@ -39,7 +39,7 @@ function PageBuilder({
 
       <PropsEditorMenu {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
 
-      <PreviewMenu {...{ template, handleComponentClick: selectComponent }} />
+      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate, components }} />
     </div>
   );
 }
