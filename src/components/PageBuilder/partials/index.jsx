@@ -38,7 +38,7 @@ const ComponentButton = ({ component, updateTemplate }) => {
     );
 };
 
-export const PropsEditorMenu = ({ selectedComponent, updateTemplateItem, setSelectedComponent }) => {
+export const PropsEditorMenu = ({ selectedComponent, updateTemplateItem, removeTemplateItem, setSelectedComponent }) => {
     return (
         <div className={styles.componentStateEditor}>
             {selectedComponent ? (
@@ -55,6 +55,7 @@ export const PropsEditorMenu = ({ selectedComponent, updateTemplateItem, setSele
                         props={selectedComponent.component.props}
                         index={selectedComponent.index}
                         updateTemplateItem={updateTemplateItem}
+                        removeTemplateItem={removeTemplateItem}
                     />
                 </div>
             ) : (
@@ -65,14 +66,14 @@ export const PropsEditorMenu = ({ selectedComponent, updateTemplateItem, setSele
 };
 
 
-const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
+const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemplateItem }) => {
     const [localProps, setLocalProps] = useState(props);
 
     useEffect(() => {
         setLocalProps(props);
     }, [props]);
 
-    if(localProps.length <= 0) return 'No props found.';
+    if (localProps.length <= 0) return 'No props found.';
 
     const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
@@ -98,14 +99,19 @@ const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
         updateTemplateItem({ type, props: localProps }, index);
     };
 
-    const renderArrayItem = (key, item, itemIndex) => (
+    const handleDelete = () => {
+        removeTemplateItem(index);
+        setLocalProps({});
+    };
+
+    const ArrayItem = ({ keyName, item, itemIndex }) => (
         <div key={itemIndex} className={styles.propEditor}>
             {Object.keys(item).map(subKey => (
-                <div className={styles['prop-item']} key={subKey}>
-                    <label>{`${key}[${itemIndex}].${subKey}`}</label>
+                <div className={styles.propItem} key={subKey}>
+                    <label>{`${keyName}[${itemIndex}].${subKey}`}</label>
                     <input
                         type="text"
-                        name={key}
+                        name={keyName}
                         value={item[subKey]}
                         onChange={(e) => handleChange(e, itemIndex, subKey)}
                     />
@@ -114,10 +120,10 @@ const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
         </div>
     );
 
-    const renderInput = (key, value) => (
+    const InputField = ({ keyName, value }) => (
         <input
             type="text"
-            name={key}
+            name={keyName}
             value={value}
             onChange={(e) => handleChange(e)}
         />
@@ -129,23 +135,29 @@ const PropsEditor = ({ type, props, index, updateTemplateItem }) => {
                 <div key={key} className={styles.propEditor}>
                     <label>{key}</label>
                     {Array.isArray(localProps[key])
-                        ? localProps[key].map((item, itemIndex) => renderArrayItem(key, item, itemIndex))
-                        : renderInput(key, localProps[key])
+                        ? localProps[key].map((item, itemIndex) => (
+                            <ArrayItem keyName={key} item={item} itemIndex={itemIndex} />
+                        ))
+                        : <InputField keyName={key} value={localProps[key]} />
                     }
                 </div>
             ))}
-            <button onClick={handleConfirm}>Confirm Changes</button>
+            <button onClick={handleConfirm}>Confirm Changes</button><br />
+            <button onClick={handleDelete}>Delete Component</button>
         </div>
     );
 };
 
-export const PreviewMenu = ({ template, handleComponentClick }) => {
+export const PreviewMenu = ({ template, handleComponentClick, updateTemplate, components }) => {
     return (
         <PageRender
             templateData={{ components: template }}
             updateComponentIndex={() => { }}
             handleComponentClick={handleComponentClick}
+            appendComponent={updateTemplate}
+            components={components}
             style={{ 'scale': '.5', 'marginTop': '0', "transform": "translateY(-50%)" }}
+            previewMode
         />
     );
 };

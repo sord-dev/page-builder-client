@@ -10,13 +10,22 @@ function AllSites() {
     const { appState } = useAppContext();
     const navigate = useNavigate();
 
-    const onComponentClick = (component) => {
-    if (!component) return;
-    setPageState(prev => ({ ...prev, template: [...pageState.template, component] }));
-}
+    const onComponentClick = (component, position = 'before') => {
+        if (!component) {
+            throw new Error('No component provided');
+        }
+        if (!['before', 'after'].includes(position)) {
+            throw new Error('Invalid position provided');
+        }
+
+        if (position === 'before') {
+            setPageState(prev => ({ ...prev, template: [component, ...prev.template] }));
+        } else {
+            setPageState(prev => ({ ...prev, template: [...prev.template, component] }));
+        }
+    }
 
     const updateComponentTemplateItem = (updatedItem, index) => {
-        console.log(updatedItem)
         setPageState(prev => {
             const newTemplate = prev.template.map((item, i) => {
                 if (i === index) {
@@ -30,6 +39,13 @@ function AllSites() {
         })
     }
 
+    const removeComponentFromTemplate = (index) => {
+        setPageState(prev => {
+            const newTemplate = prev.template.filter((item, i) => i !== index)
+
+            return { ...prev, template: newTemplate }
+        })
+    }
 
     const resetTemplate = () => {
         setPageState(prev => ({ ...prev, template: [] }))
@@ -37,7 +53,6 @@ function AllSites() {
 
     useEffect(() => {
         if (!appState.components.index) return
-
         setPageState(prev => ({ ...prev, components: appState.components.index }));
     }, [appState])
 
@@ -52,6 +67,7 @@ function AllSites() {
                     updateTemplate: onComponentClick,
                     components: pageState.components,
                     updateTemplateItem: updateComponentTemplateItem,
+                    removeTemplateItem: removeComponentFromTemplate,
                     submitTemplate: () => navigate(buildLink(pageState.template)),
                     resetTemplate: () => resetTemplate(),
                 }} />

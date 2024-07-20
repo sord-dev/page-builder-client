@@ -44,7 +44,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button, input {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -55,7 +55,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+button:hover, input:hover {
   border-color: #646cff;
 }
 button:focus,
@@ -84,6 +84,22 @@ body, #root {
   width: 100%;
 }
 
+.exportButton {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  z-index: 999;
+  width: 200px;
+}
+
+.fileNameInput {
+  position: fixed;
+  bottom: 78px;
+  right: 26px;
+  z-index: 999;
+  width: 200px;
+}
+
 .site-builder {
   display: flex;
   padding: 0 4rem;
@@ -101,18 +117,4 @@ body, #root {
   /* min-height: 100vh; */
   flex: 1;
   gap: 4rem;
-}
-
-.componentContainer {
-  display: flex;
-}
-
-.componentHover {
-  border: 1px solid transparent;
-  transition: border-color 0.1s;
-  overflow: hidden;
-}
-
-.componentHover:hover {
-  border: 1px solid rgba(255, 255, 255);
 }

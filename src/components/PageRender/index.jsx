@@ -1,40 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import * as library from '../../lib/component-library';
 
-import { useComponentRefs } from '../PageBuilder/utils';
-import { useLocation } from 'react-router-dom';
+import { renderComponents } from './utils';
+import { useComponentRefs } from '../../hooks';
 
-const renderJSXComponent = (component) => {
-  if (!component || !component.type) {
-    return null;
-  }
+import { AppendComponentButton } from './partials';
 
-  const Component = determineComponentType(component);
-
-  if (!Component) {
-    return null;
-  }
-
-  return <Component {...component.props} />;
-};
-
-const determineComponentType = (component) => {
-  if (!component || !component.type) {
-    return null;
-  }
-
-  const CustomComponent = library[component.type];
-
-  if (!CustomComponent) {
-    throw new Error(`Component ${component.type} not found`);
-  }
-
-  return CustomComponent;
-};
-
-function PageRender({ templateData, style, handleComponentClick = () => {} }) {
+function PageRender({ templateData, style, handleComponentClick = () => { }, previewMode = false, appendComponent = (component, position) => { }, components }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
-  const location = useLocation()
 
   useEffect(() => {
     setTemplate(templateData);
@@ -42,41 +14,20 @@ function PageRender({ templateData, style, handleComponentClick = () => {} }) {
 
   const componentRefs = useComponentRefs(template.components, handleComponentClick);
 
-  const renderComponents = () => {
-    if (!template || !template.components.length) {
-      return <div>Loading template...</div>; // Display a placeholder
-    }
-
-    componentRefs.current = []; // Clear previous refs
-
-    return template.components.map((component, index) => {
-      try {
-        const ComponentElement = renderJSXComponent(component);
-
-        if (!ComponentElement) {
-          throw new Error(`Component ${component.type} not found`);
-        }
-
-        return (
-          <div
-            className={`componentContainer ${location.pathname != "/sites/render" ? "componentHover" : ""}` }
-            key={`${component.type}-${index}`}
-            ref={(el) => (componentRefs.current[index] = el)}
-          >
-            {ComponentElement}
-          </div>
-        );
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    });
-  };
-
   return (
     <div className='main' style={style}>
       {/* Render loaded components */}
-      {renderComponents()}
+
+
+      {template.components.length === 0 && (
+        <div className='empty-page'>
+          <h2>Empty Page</h2>
+          <p>Click the button below to add a component to the page</p>
+          <AppendComponentButton onSubmit={(c) => appendComponent(c, 'before')} components={components}/>
+        </div>
+      )}
+
+      {renderComponents({ template, previewMode, componentRefs, appendComponent, components })}
     </div>
   );
 }

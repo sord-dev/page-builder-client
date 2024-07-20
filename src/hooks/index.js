@@ -23,4 +23,3 @@ export const useComponentRefs = (components, handleClick) => {
 
     return componentRefs;
 };
-
