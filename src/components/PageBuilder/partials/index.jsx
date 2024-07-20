@@ -146,6 +146,7 @@ export const PreviewMenu = ({ template, handleComponentClick }) => {
             updateComponentIndex={() => { }}
             handleComponentClick={handleComponentClick}
             style={{ 'scale': '.5', 'marginTop': '0', "transform": "translateY(-50%)" }}
+            previewMode
         />
     );
 };

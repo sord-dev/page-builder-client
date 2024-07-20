@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { PageRender } from '../../components';
 import { useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
-import { downloadHomeComponent } from '../../utils';
+import { TemplateExporter } from '../../utils';
 
 function RenderSiteClientSide() {
     const [params] = useSearchParams();
@@ -36,7 +36,7 @@ function RenderSiteClientSide() {
                 onChange={(e) => setFileName(e.target.value)} 
                 placeholder="Enter file name" 
             />
-            <button className='exportButton' onClick={() => downloadHomeComponent(templateData.data, fileName)}>Export Site</button>
+            <button className='exportButton' onClick={() => TemplateExporter.downloadComponent(templateData.data, fileName)}>Export Site</button>
             {templateData.loading && <div>Loading...</div>}
             {templateData.error && <div>Error: {templateData.error.message}</div>}
             {templateData.data && <PageRender templateData={templateData.data} updateComponentIndex={updateComponentIndex} />}
