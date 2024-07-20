@@ -118,17 +118,3 @@ body, #root {
   flex: 1;
   gap: 4rem;
 }
-
-.componentContainer {
-  display: flex;
-}
-
-.componentHover {
-  border: 1px solid transparent;
-  transition: border-color 0.1s;
-  overflow: hidden;
-}
-
-.componentHover:hover {
-  border: 1px solid rgba(255, 255, 255);
-}

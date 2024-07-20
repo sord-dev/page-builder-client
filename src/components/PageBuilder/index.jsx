@@ -6,6 +6,7 @@ function PageBuilder({
   updateTemplate = (prevTemplates) => { console.log(prevTemplates) },
   components = [],
   updateTemplateItem = () => { console.log("Updateing template item") },
+  removeTemplateItem = () => { console.log("Removing template item") },
   submitTemplate = (prevTemplates) => { console.log(prevTemplates) },
   resetTemplate = () => { console.log('resetting template') }
 }) {
@@ -20,6 +21,11 @@ function PageBuilder({
     resetTemplate()
   }
 
+  const handleRemoveComponent = (index) => {
+    removeTemplateItem(index)
+    setSelectedComponent(null)
+  }
+
   return (
     <div>
       <ComponentsPicker
@@ -31,7 +37,7 @@ function PageBuilder({
         }}
       />
 
-      <PropsEditorMenu {...{ selectedComponent, setSelectedComponent, updateTemplateItem }} />
+      <PropsEditorMenu {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
 
       <PreviewMenu {...{ template, handleComponentClick: selectComponent }} />
     </div>

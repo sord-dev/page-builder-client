@@ -30,6 +30,13 @@ function AllSites() {
         })
     }
 
+    const removeComponentFromTemplate = (index) => {
+        setPageState(prev => {
+            const newTemplate = prev.template.filter((item, i) => i !== index)
+
+            return { ...prev, template: newTemplate }
+        })
+    }
 
     const resetTemplate = () => {
         setPageState(prev => ({ ...prev, template: [] }))
@@ -52,6 +59,7 @@ function AllSites() {
                     updateTemplate: onComponentClick,
                     components: pageState.components,
                     updateTemplateItem: updateComponentTemplateItem,
+                    removeTemplateItem: removeComponentFromTemplate,
                     submitTemplate: () => navigate(buildLink(pageState.template)),
                     resetTemplate: () => resetTemplate(),
                 }} />
