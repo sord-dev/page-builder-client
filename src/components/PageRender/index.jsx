@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as library from '../../lib/component-library';
 
 import { useComponentRefs } from '../PageBuilder/utils';
+import { useLocation } from 'react-router-dom';
 
 const renderJSXComponent = (component) => {
   if (!component || !component.type) {
@@ -33,6 +34,7 @@ const determineComponentType = (component) => {
 
 function PageRender({ templateData, style, handleComponentClick = () => {} }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
+  const location = useLocation()
 
   useEffect(() => {
     setTemplate(templateData);
@@ -57,6 +59,7 @@ function PageRender({ templateData, style, handleComponentClick = () => {} }) {
 
         return (
           <div
+            className={`componentContainer ${location.pathname != "/sites/render" ? "componentHover" : ""}` }
             key={`${component.type}-${index}`}
             ref={(el) => (componentRefs.current[index] = el)}
           >

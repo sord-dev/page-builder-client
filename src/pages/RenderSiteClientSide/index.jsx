@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { PageRender } from '../../components';
 import { useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
+import { downloadHomeComponent } from '../../utils';
 
 function RenderSiteClientSide() {
     const [params] = useSearchParams();
     const [templateData, setTemplateData] = useState({ data: null, loading: false, error: null });
-    const { updateComponentIndex } = useAppContext()
+    const [fileName, setFileName] = useState('Home');
+    const { updateComponentIndex } = useAppContext();
 
     useEffect(() => {
         setTemplateData({ data: null, loading: true, error: null });
@@ -27,6 +29,14 @@ function RenderSiteClientSide() {
     return (
         <>
             <h1>Dynamic Components</h1>
+            <input 
+                className='fileNameInput'
+                type="text" 
+                value={fileName} 
+                onChange={(e) => setFileName(e.target.value)} 
+                placeholder="Enter file name" 
+            />
+            <button className='exportButton' onClick={() => downloadHomeComponent(templateData.data, fileName)}>Export Site</button>
             {templateData.loading && <div>Loading...</div>}
             {templateData.error && <div>Error: {templateData.error.message}</div>}
             {templateData.data && <PageRender templateData={templateData.data} updateComponentIndex={updateComponentIndex} />}
