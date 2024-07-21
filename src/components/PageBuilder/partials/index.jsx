@@ -9,6 +9,9 @@ export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, r
     const [isOpen, setIsOpen] = useState(false);
     const catagorisedComponents = reduceComponentsByTags(components);
 
+
+    console.log(catagorisedComponents)
+
     const togglePicker = () => {
         setIsOpen(!isOpen);
     };

@@ -11,12 +11,12 @@ const defaultAppState = {
                 type: 'HeadingWith4IconsAndArrows',
                 props: {
                     title: 'string',
-                    icon: [{ icon: 'test' }]
+                    icon: [{ icon: 'test', link: 'test'}],
                 }
             },
             {
                 type: 'HeadingWith6Icons',
-                props: { title: 'string', icon: [] }
+                props: { title: 'string', icon: [], _tag: 'heading' }
             }
         ]
     }
