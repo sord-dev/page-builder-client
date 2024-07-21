@@ -71,3 +71,22 @@
     gap: 0.5rem;
     cursor: pointer;
 }
+
+
+.addSectionBtn {
+    position: absolute;
+    top: 20px;
+    z-index: 99;
+}
+
+.addSectionBtn:last-child {
+    top: unset;
+    bottom: 20px;
+}
+
+.empty-page > .addSectionBtn {
+    position: unset;
+    top: unset;
+    bottom: unset;
+    z-index: unset;
+}

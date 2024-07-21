@@ -2,11 +2,12 @@
     position: fixed;
     z-index: 1000;
     bottom: 78px;
+    top: 26px;
     right: 26px;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     margin: 0 auto;
     max-width: 1200px;
 
@@ -17,6 +18,8 @@
     padding: 6px 12px;
 
     transition: opacity .3s;
+
+    overflow-y: scroll;
 }
 
 .componentPicker:hover {
