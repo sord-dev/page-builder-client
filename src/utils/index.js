@@ -30,16 +30,21 @@ export const buildPage = (components, userValues) => { // TODO-  mode to LinkBui
 };
 
 export const reduceComponentsByTags = (components) => {
-    if(!components.length) return;
+    if (!components.length) return;
     console.log(components);
     return components.reduce((acc, c) => {
         if (!acc[c.props._tag]) {
             acc[c.props._tag] = [];
         }
-        
-        acc['misc'] = [];
-        if (!c.props._tag) {
+
+        if (c.props._tag == undefined) {
             c.props._tag = 'misc';
+
+            if (acc['misc'] === undefined) {
+                acc['misc'] = [];
+            }
+
+            acc['misc'].push(c);
         }
 
         acc[c.props._tag].push(c);
