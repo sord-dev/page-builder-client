@@ -3,14 +3,21 @@ import styles from '../styles.module.css';
 
 import { updateNestedState } from '../utils';
 
-export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemplateItem }) => { // Used to render the props editor for the selected component
+export const PropsEditor = ({
+    type = null,
+    props = {},
+    index = null,
+    updateTemplateItem = () => console.log('updateTemplateItem not provided'),
+    removeTemplateItem = () => console.log('removeTemplateItem not provided')
+}) => { // Used to render the props editor for the selected component
+    if(!type) return 'No component selected.'; // If no component is selected, return a message
     const [localProps, setLocalProps] = useState(props);
 
     useEffect(() => {
         setLocalProps(props);
     }, [props]);
 
-    if (localProps.length <= 0) return 'No props found.';
+    if (localProps === null) return 'No props to edit.'; // If there are no props to edit, return a message
 
     const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
@@ -29,14 +36,7 @@ export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemp
 
     return (
         <div className={styles.propEditorMain}>
-            {Object.keys(localProps).map(key => (
-                <PropertyEditor
-                    key={key}
-                    keyName={key}
-                    value={localProps[key]}
-                    handleChange={handleChange}
-                />
-            ))}
+            {Object.keys(localProps).map(key => <PropertyEditor key={key} keyName={key} value={localProps[key]} handleChange={handleChange} />)}
             <button onClick={handleConfirm}>Confirm Changes</button><br />
             <button onClick={handleDelete}>Delete Component</button>
         </div>

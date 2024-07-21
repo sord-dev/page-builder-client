@@ -31,10 +31,12 @@ export const AppContextProvider = ({ children }) => {
     const updateComponentIndex = (components) => {
         localStorage.setItem('componentsList', JSON.stringify(components));
         setState(prev => ({ ...prev, components: { index: components } }));
-    }
+    };
+
+    const returnComponentTags = () => appState.components.index.map(c => c.props?._tag);
 
     return (
-        <AppContext.Provider value={{ appState, updateComponentIndex }}>
+        <AppContext.Provider value={{ appState, updateComponentIndex, returnComponentTags }}>
             {children}
         </AppContext.Provider>
     );
