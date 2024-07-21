@@ -57,8 +57,10 @@
     max-height: 200px;
     overflow-y: scroll;
 
-    top: 0;
-    right: 60px;
+    top: 60px;
+    right: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .appendList-spacer {
