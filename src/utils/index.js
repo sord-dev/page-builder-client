@@ -30,12 +30,15 @@ export const buildPage = (components, userValues) => { // TODO-  mode to LinkBui
 };
 
 export const reduceComponentsByTags = (components) => {
+    if(!components.length) return;
+    console.log(components);
     return components.reduce((acc, c) => {
         if (!acc[c.props._tag]) {
             acc[c.props._tag] = [];
         }
-
-        if (c.props._tag == undefined) {
+        
+        acc['misc'] = [];
+        if (!c.props._tag) {
             c.props._tag = 'misc';
         }
 
