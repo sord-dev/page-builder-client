@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles.module.css';
 
-export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemplateItem }) => {
+import { updateNestedState } from '../utils';
+
+export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemplateItem }) => { // Used to render the props editor for the selected component
     const [localProps, setLocalProps] = useState(props);
 
     useEffect(() => {
@@ -12,22 +14,7 @@ export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemp
 
     const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
-
-        setLocalProps(prevProps => {
-            if (itemIndex !== null && subKey !== null) {
-                return {
-                    ...prevProps,
-                    [name]: prevProps[name].map((item, idx) =>
-                        idx === itemIndex ? { ...item, [subKey]: value } : item
-                    )
-                };
-            } else {
-                return {
-                    ...prevProps,
-                    [name]: value
-                };
-            }
-        });
+        setLocalProps(prevProps => updateNestedState(prevProps, name, value, itemIndex, subKey));
     };
 
     const handleConfirm = () => {
@@ -43,15 +30,12 @@ export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemp
     return (
         <div className={styles.propEditorMain}>
             {Object.keys(localProps).map(key => (
-                <div key={key} className={styles.propEditor}>
-                    <label>{key}</label>
-                    {Array.isArray(localProps[key])
-                        ? localProps[key].map((item, itemIndex) => (
-                            <ArrayItem keyName={key} item={item} itemIndex={itemIndex} handleChange={handleChange} />
-                        ))
-                        : <InputField keyName={key} value={localProps[key]} handleChange={handleChange} />
-                    }
-                </div>
+                <PropertyEditor
+                    key={key}
+                    keyName={key}
+                    value={localProps[key]}
+                    handleChange={handleChange}
+                />
             ))}
             <button onClick={handleConfirm}>Confirm Changes</button><br />
             <button onClick={handleDelete}>Delete Component</button>
@@ -59,8 +43,29 @@ export const PropsEditor = ({ type, props, index, updateTemplateItem, removeTemp
     );
 };
 
+const PropertyEditor = ({ keyName, value, handleChange }) => ( // Used to render the props of the selected component
+    <div className={styles.propEditor}>
+        <label>{keyName}</label>
+        {Array.isArray(value)
+            ? value.map((item, itemIndex) => (
+                <ArrayItem
+                    key={`${keyName}-${itemIndex}`}
+                    keyName={keyName}
+                    item={item}
+                    itemIndex={itemIndex}
+                    handleChange={handleChange}
+                />
+            ))
+            : <InputField
+                keyName={keyName}
+                value={value}
+                handleChange={handleChange}
+            />
+        }
+    </div>
+);
 
-const ArrayItem = ({ keyName, item, itemIndex, handleChange = e => console.log(e.target.value) }) => (
+const ArrayItem = ({ keyName, item, itemIndex, handleChange = e => console.log(e.target.value) }) => ( // Used to render the array items of the selected component
     <div key={itemIndex} className={styles.propEditor}>
         {Object.keys(item).map(subKey => (
             <div className={styles.propItem} key={subKey}>
@@ -76,7 +81,7 @@ const ArrayItem = ({ keyName, item, itemIndex, handleChange = e => console.log(e
     </div>
 );
 
-const InputField = ({ keyName, value, handleChange = e => console.log(e.target.value) }) => {
+const InputField = ({ keyName, value, handleChange = e => console.log(e.target.value) }) => { // Used to render the input fields of the selected component
     if (keyName.startsWith('_')) {
         return <p>{value}</p>
     }
