@@ -10,14 +10,13 @@ export const PropsEditor = ({
     updateTemplateItem = () => console.log('updateTemplateItem not provided'),
     removeTemplateItem = () => console.log('removeTemplateItem not provided')
 }) => { // Used to render the props editor for the selected component
-    if(!type) return 'No component selected.'; // If no component is selected, return a message
+    if (!type) return 'No component selected.'; // If no component is selected, return a message
+
     const [localProps, setLocalProps] = useState(props);
 
     useEffect(() => {
         setLocalProps(props);
     }, [props]);
-
-    if (localProps === null) return 'No props to edit.'; // If there are no props to edit, return a message
 
     const handleChange = (e, itemIndex = null, subKey = null) => {
         const { name, value } = e.target;
@@ -33,13 +32,17 @@ export const PropsEditor = ({
         setLocalProps({});
     };
 
-
     return (
-        <div className={styles.propEditorMain}>
-            {Object.keys(localProps).map(key => <PropertyEditor key={key} keyName={key} value={localProps[key]} handleChange={handleChange} />)}
-            <button onClick={handleConfirm}>Confirm Changes</button><br />
-            <button onClick={handleDelete}>Delete Component</button>
-        </div>
+        <>
+            <div className={styles.propEditorMain}>
+                {Object.keys(localProps).map(key => <PropertyEditor key={key} keyName={key} value={localProps[key]} handleChange={handleChange} />)}
+            </div>
+
+            <div className={styles.propEditorControls}>
+                <button onClick={handleConfirm}>Confirm Changes</button>
+                <button onClick={handleDelete}>Delete Component</button>
+            </div>
+        </>
     );
 };
 
@@ -67,23 +70,26 @@ const PropertyEditor = ({ keyName, value, handleChange }) => ( // Used to render
 
 const ArrayItem = ({ keyName, item, itemIndex, handleChange = e => console.log(e.target.value) }) => ( // Used to render the array items of the selected component
     <div key={itemIndex} className={styles.propEditor}>
-        {Object.keys(item).map(subKey => (
-            <div className={styles.propItem} key={subKey}>
-                <label>{`${keyName}[${itemIndex}].${subKey}`}</label>
-                <input
-                    type="text"
-                    name={keyName}
-                    value={item[subKey]}
-                    onChange={(e) => handleChange(e, itemIndex, subKey)}
-                />
-            </div>
-        ))}
+        {Object.keys(item).map(subKey => {
+
+            return (
+                <div className={styles[`prop-item`]} key={subKey}>
+                    <label>{`${subKey} ${itemIndex}`}</label>
+                    <input
+                        type="text"
+                        name={keyName}
+                        value={item[subKey]}
+                        onChange={(e) => handleChange(e, itemIndex, subKey)}
+                    />
+                </div>
+            )
+        })}
     </div>
 );
 
 const InputField = ({ keyName, value, handleChange = e => console.log(e.target.value) }) => { // Used to render the input fields of the selected component
     if (keyName.startsWith('_')) {
-        return <p>{value}</p>
+        return <p className={styles['tag']}>{value}</p>
     }
 
     return (

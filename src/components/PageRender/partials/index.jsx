@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from '../styles.module.css';
+import { reduceComponentsByTags } from '../../../utils';
 
 export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = false, index = 0, appendComponent, components }) => {
     const [hovering, setHovering] = useState(false);
@@ -39,7 +40,6 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
     );
 }
 
-
 export const AppendComponentButton = ({ onSubmit = (component) => { console.log('appending', component) }, components }) => {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -49,16 +49,53 @@ export const AppendComponentButton = ({ onSubmit = (component) => { console.log(
 
     return (
         <>
-            {menuOpen && (
-                <div className={styles.appendList}>
-                    <div className={styles['appendList-spacer']} />
-                    {components.map((component, index) => (
-                        <button key={index} onClick={() => onSubmit(component)}>{component.type}</button>
-                    ))}
-                </div>
-            )}
-
+            {menuOpen && <ComponentAppendMenu components={components} onSubmit={(c) => onSubmit(c)} />}
             <button onClick={handleMenuToggle}>+</button>
+        </>
+    );
+}
+
+const ComponentAppendMenu = ({ components, onSubmit }) => {
+    if (!components) throw new Error('No components provided');
+    if (!onSubmit) throw new Error('No onSubmit function provided');
+    const [menuState, setMenuState] = useState({ stage: 0, catagory: null, components: null });
+
+    const catagories = reduceComponentsByTags(components)
+
+    const handleCatagorySelect = (catagory) => {
+        setMenuState({ stage: 1, catagory, components: catagories[catagory] });
+    }
+
+    const steps = [
+        <CatagoryStep {...{ catagories, handleCatagorySelect }} />,
+        <ComponentStep {...{ components: menuState.components, onSubmit }} />
+    ];
+
+    return (
+        <div className={styles.appendList}>
+            <div className={styles['appendList-spacer']} />
+            {steps[menuState.stage]}
+        </div>
+    )
+}
+
+const CatagoryStep = ({ catagories, handleCatagorySelect }) => {
+    const catKeys = Object.keys(catagories);
+    return (
+        <>
+            {catKeys.map((catagory, index) => (
+                <button key={index} onClick={() => handleCatagorySelect(catagory)}>{catagory}</button>
+            ))}
+        </>
+    );
+}
+
+const ComponentStep = ({ components, onSubmit }) => {
+    return (
+        <>
+            {components.map((component, index) => (
+                <button key={index} onClick={() => onSubmit(component)}>{component.type}</button>
+            ))}
         </>
     );
 }

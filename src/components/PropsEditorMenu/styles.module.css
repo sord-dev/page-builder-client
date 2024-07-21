@@ -48,6 +48,8 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+
+    width: 100%;
 }
 
 .heading {
@@ -79,4 +81,23 @@
 
 .componentStateEditor:hover {
  opacity: 1;
+}
+
+.propEditorControls {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin-right: 4px;
+    font-size: 12px;
+    color: #333;
+
+    width: max-content;
 }

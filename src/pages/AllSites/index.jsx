@@ -10,7 +10,7 @@ function AllSites() {
     const { appState } = useAppContext();
     const navigate = useNavigate();
 
-    const onComponentClick = (component, position = 'before') => {
+    const onComponentClick = (component, position = 'after') => {
         if (!component) {
             throw new Error('No component provided');
         }
