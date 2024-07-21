@@ -5,7 +5,16 @@ import { useComponentRefs } from '../../hooks';
 
 import { AppendComponentButton } from './partials';
 
-function PageRender({ templateData, style, handleComponentClick = () => { }, previewMode = false, appendComponent = (component, position) => { }, components }) {
+import styles from './styles.module.css';
+
+function PageRender({
+  templateData = null,
+  style,
+  handleComponentClick = () => { },
+  previewMode = false,
+  appendComponent = (component, position) => { },
+  components
+}) {
   const [template, setTemplate] = useState(templateData || { components: [] });
 
   useEffect(() => {
@@ -20,10 +29,9 @@ function PageRender({ templateData, style, handleComponentClick = () => { }, pre
 
 
       {template.components.length === 0 && (
-        <div className='empty-page'>
-          <h2>Empty Page</h2>
+        <div className={styles['empty-page']}>
           <p>Click the button below to add a component to the page</p>
-          <AppendComponentButton onSubmit={(c) => appendComponent(c, 'before')} components={components}/>
+          <AppendComponentButton onSubmit={(c) => appendComponent(c, 'before')} components={components} />
         </div>
       )}
 

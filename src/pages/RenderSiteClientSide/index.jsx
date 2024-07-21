@@ -28,7 +28,6 @@ function RenderSiteClientSide() {
 
     return (
         <>
-            <h1>Dynamic Components</h1>
             <input 
                 className='fileNameInput'
                 type="text" 

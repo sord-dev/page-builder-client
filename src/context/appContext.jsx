@@ -5,8 +5,20 @@ const AppContext = createContext(null);
 
 const defaultAppState = {
     components: {
-        index:
-            [{ type: 'ContactForm', props: {} }, { type: 'HeadingWith4IconsAndArrows', props: { title: 'string', icon: [{icon: 'test'}] } }, { type: 'HeadingWith6Icons', props: { title: 'string', icon: [] } }]
+        index: [
+            { type: 'ContactForm', props: {} },
+            {
+                type: 'HeadingWith4IconsAndArrows',
+                props: {
+                    title: 'string',
+                    icon: [{ icon: 'test' }]
+                }
+            },
+            {
+                type: 'HeadingWith6Icons',
+                props: { title: 'string', icon: [] }
+            }
+        ]
     }
 }
 
@@ -17,7 +29,6 @@ export const AppContextProvider = ({ children }) => {
     const [appState, setState] = useState(defaultAppState);
 
     const updateComponentIndex = (components) => {
-        console.log('Updating component index:', components);
         localStorage.setItem('componentsList', JSON.stringify(components));
         setState(prev => ({ ...prev, components: { index: components } }));
     }
