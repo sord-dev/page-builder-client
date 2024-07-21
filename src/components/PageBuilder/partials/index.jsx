@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
 import PageRender from "../../PageRender";
 import styles from '../styles.module.css';
+import { reduceComponentsByTags } from '../../../utils';
 
 // COMPONENTS PICKER PARTIALS
 
 export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const catagorisedComponents = reduceComponentsByTags(components);
 
     const togglePicker = () => {
         setIsOpen(!isOpen);
     };
-
-    const catagorisedComponents = components.reduce((acc, c) => {
-        if (!acc[c.props._tag]) {
-            acc[c.props._tag] = [];
-        }
-
-        if (c.props._tag == undefined) {
-            c.props._tag = 'misc';
-        }
-
-        acc[c.props._tag].push(c);
-        return acc;
-    }, {});
 
     return (
         <>
@@ -31,7 +20,7 @@ export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, r
             </button>
             {isOpen && (
                 <div className={styles.componentPicker}>
-                    <h4>Components</h4>
+                    <h4>Components ({components.length})</h4>
                     <ul className={styles.componentGrid}>
                         {Object.keys(catagorisedComponents).map((catagory, i) => (
                             <li key={i}>
@@ -44,6 +33,7 @@ export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, r
                             </li>
                         ))}
                     </ul>
+
                     <div className={styles.componentPickerControls}>
                         <button onClick={resetTemplate}>Reset Template</button>
                         <button onClick={submitTemplate}>Submit Site</button>

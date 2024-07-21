@@ -35,8 +35,8 @@ export const reduceComponentsByTags = (components) => {
             acc[c.props._tag] = [];
         }
 
-        if (c.props._tag == 'undefined') {
-            c.props._tag = 'Misc';
+        if (c.props._tag == undefined) {
+            c.props._tag = 'misc';
         }
 
         acc[c.props._tag].push(c);
