@@ -48,10 +48,10 @@ export const AppendComponentButton = ({ onSubmit = (component) => { console.log(
     }
 
     return (
-        <>
+        <div className={styles['button-wrapper']}>
             {menuOpen && <ComponentAppendMenu components={components} onSubmit={(c) => onSubmit(c)} />}
             <button onClick={handleMenuToggle}>+</button>
-        </>
+        </div>
     );
 }
 
