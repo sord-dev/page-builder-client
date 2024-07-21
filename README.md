@@ -54,3 +54,12 @@ export default PageBuilder;
 - Very large url parameters
 - Cannot handle nested compoents
 - Cannot handle generic compoennts (at the moment)
+
+# Backlog
+
+- adding more components
+-~~ catagorising components~~
+- fleshing out appending components to the page
+- integrate backend (link shortner)
+- flesh out export functionality (fully zipped react websites)
+- look into nextjs conversions

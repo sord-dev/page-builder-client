@@ -1,5 +1,7 @@
 import React from 'react';
-import { ComponentsPicker, PreviewMenu, PropsEditorMenu } from './partials';
+import { ComponentsPicker, PreviewMenu } from './partials';
+
+import PropsEditorMenu from '../PropsEditorMenu'; // internal component
 
 function PageBuilder({
   template = [],
