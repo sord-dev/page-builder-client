@@ -7,7 +7,8 @@ import { validTabs } from './utils';
 const TemplateEditor = ({
     selectedComponent = null,
     updateTemplateItem = () => { console.log("Updating template item") },
-    removeTemplateItem = () => { console.log("Removing template item") }
+    removeTemplateItem = () => { console.log("Removing template item") },
+    pages = []
 }) => {
     const [editorState, setEditorState] = React.useState({ tab: 'props' });
 
@@ -29,13 +30,13 @@ const TemplateEditor = ({
             updateTemplateItem={updateTemplateItem}
             removeTemplateItem={removeTemplateItem}
         />,
-        pages: <PageEditor />
+        pages: <PageEditor {...{ pages }} />
     }
 
 
     return (
         <div className={styles.componentStateEditor}>
-            <div>
+            <div className={styles['template-editor-tabs']}>
                 {validTabs.map(tab => (
                     <button
                         key={tab}

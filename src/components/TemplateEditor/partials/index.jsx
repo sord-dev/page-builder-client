@@ -8,7 +8,12 @@ export const PageEditor = ({ pages }) => {
         <div className={styles.selectedComponent}>
             <h4>All Pages</h4>
             <div className={styles.pageEditorMain}>
-                
+                {pages.map((page, i) => (
+                    <div key={i} className={styles.pageLink}>
+                        <h5>{page.name}</h5>
+                        <p>{page.path}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );

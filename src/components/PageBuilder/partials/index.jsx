@@ -75,7 +75,7 @@ const ComponentButton = ({ component, updateTemplate }) => {
 
 // PREVIEW MENU PARTIALS
 
-export const PreviewMenu = ({ template, handleComponentClick, updateTemplate, components }) => {
+export const PreviewMenu = ({ template, pages, handleComponentClick, updateTemplate, components }) => {
     return (
         <PageRender
             templateData={{ components: template }}

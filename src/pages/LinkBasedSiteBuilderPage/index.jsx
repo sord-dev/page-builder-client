@@ -6,7 +6,7 @@ import { buildLink } from '../../utils'
 import { useNavigate } from 'react-router-dom'
 
 function LinkBasedSiteBuilderPage() {
-    const [pageState, setPageState] = useState({ components: [], template: [], link: null });
+    const [pageState, setPageState] = useState({ components: [], template: [], pages: [{ name: 'New Page', path: '/', templateid: 'index' }] });
     const { appState } = useAppContext();
     const navigate = useNavigate();
 
@@ -68,6 +68,7 @@ function LinkBasedSiteBuilderPage() {
     return (
         <div className='site-builder'>
             <PageBuilder {...{
+                pages: pageState.pages,
                 template: pageState.template,
                 updateTemplate: onComponentClick,
                 components: pageState.components,

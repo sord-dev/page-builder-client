@@ -4,6 +4,7 @@ import { ComponentsPicker, PreviewMenu } from './partials';
 import TemplateEditor from '../TemplateEditor'; // internal component
 
 function PageBuilder({
+  pages = [],
   template = [],
   updateTemplate = (prevTemplates) => { console.log(prevTemplates) },
   components = [],
@@ -51,9 +52,9 @@ function PageBuilder({
         }}
       />
 
-      <TemplateEditor {...{ selectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
+      <TemplateEditor {...{ selectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent, pages }} />
 
-      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate: appendComponent, components }} />
+      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate: appendComponent, components, pages }} />
     </div>
   );
 }
