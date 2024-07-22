@@ -29,6 +29,11 @@ function PageBuilder({
     setSelectedComponent(null)
   }
 
+  const appendComponent = (component, position, index = null) => {
+    updateTemplate(component, position, index)
+    setSelectedComponent({ component, index })
+  }
+
   useEffect(() => {
     if (template.length > 0) setUpdated(true)
     else setUpdated(false)
@@ -46,9 +51,9 @@ function PageBuilder({
         }}
       />
 
-      <TemplateEditor {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
+      <TemplateEditor {...{ selectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
 
-      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate, components }} />
+      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate: appendComponent, components }} />
     </div>
   );
 }
