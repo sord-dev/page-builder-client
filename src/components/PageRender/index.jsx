@@ -27,7 +27,6 @@ function PageRender({
     <div className='main' style={style}>
       {/* Render loaded components */}
 
-
       {template.components.length === 0 && (
         <div className={styles['empty-page']}>
           <p>Click the button below to add a component to the page</p>

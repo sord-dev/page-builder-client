@@ -5,47 +5,67 @@ import { reduceComponentsByTags } from '../../../utils';
 
 // COMPONENTS PICKER PARTIALS
 
-export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate }) => {
+export const ComponentsPicker = ({ updateTemplate, components, submitTemplate, resetTemplate, templateUpdated }) => {
     const [isOpen, setIsOpen] = useState(false);
     const catagorisedComponents = reduceComponentsByTags(components);
-
-
-    console.log(catagorisedComponents)
 
     const togglePicker = () => {
         setIsOpen(!isOpen);
     };
 
+    const closeMenu = () => {
+        setIsOpen(false);
+    }
+
     return (
         <>
-            <button onClick={togglePicker} className={styles.toggleButton}>
-                {isOpen ? 'Close Components Picker' : 'Open Components Picker'}
-            </button>
+            <div className={styles['quick-controls']}>
+                <button disabled={!templateUpdated} onClick={resetTemplate}>Reset Template</button>
+                <button disabled={!templateUpdated} onClick={submitTemplate}>Submit Site</button>
+                <button onClick={togglePicker}>
+                    {isOpen ? 'Close Components Picker' : 'Open Components Picker'}
+                </button>
+            </div>
+
             {isOpen && (
                 <div className={styles.componentPicker}>
-                    <h4>Components ({components.length})</h4>
+                    <div className={styles.componentPickerHead}>
+                        <h4>Components ({components.length})</h4>
+                        <button onClick={closeMenu}>x</button>
+                    </div>
+
                     <ul className={styles.componentGrid}>
-                        {Object.keys(catagorisedComponents).map((catagory, i) => (
-                            <li key={i}>
-                                <h5>{catagory}</h5>
-                                <ul className={styles.componentCatagoryGrid}>
-                                    {catagorisedComponents[catagory].map((c, i) => (
-                                        <ComponentButton component={c} updateTemplate={updateTemplate} key={i} />
-                                    ))}
-                                </ul>
-                            </li>
-                        ))}
+                        {Object.keys(catagorisedComponents).map((catagory, i) =>
+                            <RenderComponentCatagory {...{
+                                catagory,
+                                components: catagorisedComponents[catagory],
+                                updateTemplate
+                            }}
+                                key={i}
+                            />)}
                     </ul>
 
                     <div className={styles.componentPickerControls}>
-                        <button onClick={resetTemplate}>Reset Template</button>
-                        <button onClick={submitTemplate}>Submit Site</button>
+
                     </div>
                 </div>
             )}
         </>
     );
 };
+
+const RenderComponentCatagory = ({ catagory, components, updateTemplate }) => {
+    return (
+        <li>
+            <h5>{catagory}</h5>
+            <ul className={styles.componentCatagoryGrid}>
+                {components.map((c, i) => (
+                    <ComponentButton component={c} updateTemplate={updateTemplate} key={i} />
+                ))}
+            </ul>
+        </li>
+    )
+}
 
 const ComponentButton = ({ component, updateTemplate }) => {
     return (

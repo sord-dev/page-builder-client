@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComponentsPicker, PreviewMenu } from './partials';
 
 import PropsEditorMenu from '../PropsEditorMenu'; // internal component
+import { set } from 'lodash';
 
 function PageBuilder({
   template = [],
@@ -13,6 +14,7 @@ function PageBuilder({
   resetTemplate = () => { console.log('resetting template') }
 }) {
   const [selectedComponent, setSelectedComponent] = React.useState(null);
+  const [templateUpdated, setUpdated] = React.useState(false);
 
   const selectComponent = (component) => {
     setSelectedComponent(component);
@@ -28,10 +30,16 @@ function PageBuilder({
     setSelectedComponent(null)
   }
 
+  useEffect(() => {
+    if (template.length > 0) setUpdated(true)
+    else setUpdated(false)
+  }, [template])
+
   return (
     <div>
       <ComponentsPicker
         {...{
+          templateUpdated,
           updateTemplate,
           components,
           submitTemplate,

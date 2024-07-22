@@ -2,11 +2,12 @@
     position: fixed;
     z-index: 1000;
     bottom: 78px;
+    top: 26px;
     right: 26px;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     margin: 0 auto;
     max-width: 1200px;
 
@@ -17,6 +18,8 @@
     padding: 6px 12px;
 
     transition: opacity .3s;
+
+    overflow-y: scroll;
 }
 
 .componentPicker:hover {
@@ -106,4 +109,26 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+}
+
+.quick-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+
+    position: absolute;
+    z-index: 99;
+    bottom: 24px;
+    right: 24px;
+}
+
+.componentPickerHead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.componentPickerHead button {
+    padding: 2px 6px;
+    font-size: .8em;
 }

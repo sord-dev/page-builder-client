@@ -48,10 +48,10 @@ export const AppendComponentButton = ({ onSubmit = (component) => { console.log(
     }
 
     return (
-        <>
+        <div className={styles['button-wrapper']}>
             {menuOpen && <ComponentAppendMenu components={components} onSubmit={(c) => onSubmit(c)} />}
-            <button onClick={handleMenuToggle}>+</button>
-        </>
+            <button className={styles['addSectionBtn']} onClick={handleMenuToggle}>+</button>
+        </div>
     );
 }
 
@@ -80,7 +80,8 @@ const ComponentAppendMenu = ({ components, onSubmit }) => {
 }
 
 const CatagoryStep = ({ catagories, handleCatagorySelect }) => {
-    const catKeys = Object.keys(catagories);
+    const catKeys = Object.keys(catagories).sort();
+
     return (
         <>
             {catKeys.map((catagory, index) => (
@@ -91,9 +92,11 @@ const CatagoryStep = ({ catagories, handleCatagorySelect }) => {
 }
 
 const ComponentStep = ({ components, onSubmit }) => {
+    const alphabeticalComponents = components.sort(item => item.type);
+
     return (
         <>
-            {components.map((component, index) => (
+            {alphabeticalComponents.map((component, index) => (
                 <button key={index} onClick={() => onSubmit(component)}>{component.type}</button>
             ))}
         </>
