@@ -46,7 +46,7 @@ function PageBuilder({
         }}
       />
 
-      <TemplateEditor {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
+      <TemplateEditor {...{ selectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
 
       <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate, components }} />
     </div>

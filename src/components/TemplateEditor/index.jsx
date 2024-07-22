@@ -7,8 +7,7 @@ import { validTabs } from './utils';
 const TemplateEditor = ({
     selectedComponent = null,
     updateTemplateItem = () => { console.log("Updating template item") },
-    removeTemplateItem = () => { console.log("Removing template item") },
-    setSelectedComponent = () => { console.log("Setting selected component") }
+    removeTemplateItem = () => { console.log("Removing template item") }
 }) => {
     const [editorState, setEditorState] = React.useState({ tab: 'props' });
 
