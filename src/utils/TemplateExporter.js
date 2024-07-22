@@ -1,3 +1,6 @@
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+
 class TemplateExporter {
     static generateComponent(templateData, fileName) {
         this.validateTemplateData(templateData);
@@ -15,7 +18,7 @@ class TemplateExporter {
 
     static downloadComponent(templateData, fileName = 'Component') {
         const componentStr = this.generateComponent(templateData, fileName);
-        this.triggerDownload(componentStr, fileName);
+        this.createZipAndDownload(componentStr, fileName);
     }
 
     static validateTemplateData(templateData) {
@@ -45,16 +48,12 @@ ${componentJSX.join('\n')}
 `;
     }
 
-    static triggerDownload(content, fileName) {
-        const blob = new Blob([content], { type: 'text/javascript' });
-        const url = URL.createObjectURL(blob);
+    static async createZipAndDownload(content, fileName) {
+        const zip = new JSZip();
+        zip.folder(fileName).file("page.js", content);
 
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${fileName}.js`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const blob = await zip.generateAsync({ type: "blob" });
+        saveAs(blob, `${fileName}.zip`);
     }
 }
 

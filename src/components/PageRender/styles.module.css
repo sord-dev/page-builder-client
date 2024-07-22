@@ -31,13 +31,13 @@
 }
 
 .componentHover {
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     transition: border-color 0.1s;
     overflow: hidden;
 }
 
 .componentHover:hover {
-    border: 1px solid rgba(255, 255, 255);
+    border: 2px solid rgba(255, 255, 255);
 }
 
 .appendList {
