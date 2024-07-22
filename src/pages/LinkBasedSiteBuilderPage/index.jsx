@@ -5,7 +5,7 @@ import { PageBuilder } from '../../components'
 import { buildLink } from '../../utils'
 import { useNavigate } from 'react-router-dom'
 
-function AllSites() {
+function LinkBasedSiteBuilderPage() {
     const [pageState, setPageState] = useState({ components: [], template: [], link: null });
     const { appState } = useAppContext();
     const navigate = useNavigate();
@@ -58,23 +58,18 @@ function AllSites() {
 
     return (
         <div className='site-builder'>
-            <h3>Link-based Site builder</h3>
-            <p>You're to build a site from state using this menu, there will be a list of components and a submit button in which you can use to then generate and navigate to the site you've built</p>
-
-            <div>
-                <PageBuilder {...{
-                    template: pageState.template,
-                    updateTemplate: onComponentClick,
-                    components: pageState.components,
-                    updateTemplateItem: updateComponentTemplateItem,
-                    removeTemplateItem: removeComponentFromTemplate,
-                    submitTemplate: () => navigate(buildLink(pageState.template)),
-                    resetTemplate: () => resetTemplate(),
-                }} />
-            </div>
+            <PageBuilder {...{
+                template: pageState.template,
+                updateTemplate: onComponentClick,
+                components: pageState.components,
+                updateTemplateItem: updateComponentTemplateItem,
+                removeTemplateItem: removeComponentFromTemplate,
+                submitTemplate: () => navigate(buildLink(pageState.template)),
+                resetTemplate: () => resetTemplate(),
+            }} />
         </div>
     )
 }
 
 
-export default AllSites
+export default LinkBasedSiteBuilderPage

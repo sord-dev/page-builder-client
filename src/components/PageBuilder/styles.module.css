@@ -117,7 +117,7 @@
     gap: 6px;
     justify-content: center;
 
-    position: absolute;
+    position: fixed;
     z-index: 99;
     bottom: 24px;
     right: 24px;

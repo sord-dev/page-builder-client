@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { ComponentsPicker, PreviewMenu } from './partials';
 
-import PropsEditorMenu from '../PropsEditorMenu'; // internal component
-import { set } from 'lodash';
+import TemplateEditor from '../TemplateEditor'; // internal component
 
 function PageBuilder({
   template = [],
@@ -47,7 +46,7 @@ function PageBuilder({
         }}
       />
 
-      <PropsEditorMenu {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
+      <TemplateEditor {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
 
       <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate, components }} />
     </div>

@@ -57,7 +57,7 @@
     max-height: 200px;
     overflow-y: scroll;
 
-    top: 60px;
+    top: 40px;
     right: 50%;
     left: 50%;
     transform: translate(-50%, 0);
@@ -86,7 +86,7 @@
     bottom: 20px;
 }
 
-.empty-page > .addSectionBtn {
+.button-wrapper > .addSectionBtn {
     position: unset;
     top: unset;
     bottom: unset;
