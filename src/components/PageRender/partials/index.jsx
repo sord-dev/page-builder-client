@@ -8,8 +8,8 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
     const handleHover = () => { setHovering(true); };
     const handleLeave = () => { setHovering(false); };
 
-    const handleAppendComponent = (component, position) => {
-        appendComponent(component, position);
+    const handleAppendComponent = (component, position, index) => {
+        appendComponent(component, position, index);
     }
 
     if (!ComponentElement) {
@@ -23,7 +23,7 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
     return (
         <div className={`${styles['componentWrapper']}`} onMouseOver={handleHover} onMouseLeave={handleLeave}>
             {hovering && editable && (<AppendComponentButton
-                onSubmit={(result) => handleAppendComponent(result, 'before')}
+                onSubmit={(result) => handleAppendComponent(result, 'before', index)}
                 {...{ components }}
             />)}
 
@@ -33,7 +33,7 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
                 {ComponentElement}
             </div>
             {hovering && editable && (<AppendComponentButton
-                onSubmit={(result) => handleAppendComponent(result, 'after')}
+                onSubmit={(result) => handleAppendComponent(result, 'after', index)}
                 {...{ components }}
             />)}
         </div>
