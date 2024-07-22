@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ComponentsPicker, PreviewMenu } from './partials';
 
-import TemplateEditor from '../PropsEditorMenu'; // internal component
+import TemplateEditor from '../TemplateEditor'; // internal component
 
 function PageBuilder({
   template = [],
