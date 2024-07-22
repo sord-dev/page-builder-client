@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
-import { PageRender } from '../../components';
+
+import { PagePreviewControls, PageRender } from '../../components';
+
 import { useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
-import { TemplateExporter } from '../../utils';
 
 function RenderSiteClientSide() {
     const [params] = useSearchParams();
     const [templateData, setTemplateData] = useState({ data: null, loading: false, error: null });
+    const [activePage, setActivePage] = useState('index');
     const [fileName, setFileName] = useState('Home');
     const { updateComponentIndex } = useAppContext();
+
+    const changePage = (templateId) => {
+        if(templateData.data == null) return;
+        if(templateData.data.templates[templateId] == null) return;
+        setActivePage(templateId);
+    }
 
     useEffect(() => {
         setTemplateData({ data: null, loading: true, error: null });
@@ -28,17 +36,11 @@ function RenderSiteClientSide() {
 
     return (
         <>
-            <input
-                className='fileNameInput'
-                type="text"
-                value={fileName}
-                onChange={(e) => setFileName(e.target.value)}
-                placeholder="Enter file name"
-            />
-            <button className='exportButton' onClick={() => TemplateExporter.downloadComponent(templateData.data, fileName)}>Export Site</button>
-            {templateData.loading && <div>Loading...</div>}
-            {templateData.error && <div>Error: {templateData.error.message}</div>}
-            {templateData.data && <PageRender templateData={{ components: templateData.data.templates['index'] }} updateComponentIndex={updateComponentIndex} />}
+            <PagePreviewControls {...{ fileName, setFileName, pages: templateData.data?.pages, changePage, activePage }} >
+                {templateData.loading && <div>Loading...</div>}
+                {templateData.error && <div>Error: {templateData.error.message}</div>}
+                {templateData.data && <PageRender templateData={{ components: templateData.data.templates[activePage] }} updateComponentIndex={updateComponentIndex} />}
+            </PagePreviewControls>
         </>
     );
 }
