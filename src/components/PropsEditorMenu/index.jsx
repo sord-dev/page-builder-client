@@ -5,7 +5,7 @@ import { PropsEditor } from './partials';
 
 const PropsEditorMenu = ({
     selectedComponent = null,
-    updateTemplateItem = () => { console.log("Updateing template item") },
+    updateTemplateItem = () => { console.log("Updating template item") },
     removeTemplateItem = () => { console.log("Removing template item") },
     setSelectedComponent = () => { console.log("Setting selected component") }
 }) => {

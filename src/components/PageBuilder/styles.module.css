@@ -110,3 +110,25 @@
     flex-direction: column;
     gap: 6px;
 }
+
+.quick-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+
+    position: absolute;
+    z-index: 99;
+    bottom: 24px;
+    right: 24px;
+}
+
+.componentPickerHead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.componentPickerHead button {
+    padding: 2px 6px;
+    font-size: .8em;
+}
