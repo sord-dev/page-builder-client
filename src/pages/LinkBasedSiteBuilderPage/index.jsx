@@ -5,7 +5,7 @@ import { PageBuilder } from '../../components'
 import { buildLink } from '../../utils'
 import { useNavigate } from 'react-router-dom'
 
-function AllSites() {
+function LinkBasedSiteBuilderPage() {
     const [pageState, setPageState] = useState({ components: [], template: [], link: null });
     const { appState } = useAppContext();
     const navigate = useNavigate();
@@ -77,4 +77,4 @@ function AllSites() {
 }
 
 
-export default AllSites
+export default LinkBasedSiteBuilderPage

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { ComponentsPicker, PreviewMenu } from './partials';
 
 import PropsEditorMenu from '../PropsEditorMenu'; // internal component
-import { set } from 'lodash';
 
 function PageBuilder({
   template = [],
