@@ -14,7 +14,7 @@ function RenderSiteClientSide() {
         setTemplateData({ data: null, loading: true, error: null });
         try {
             const serializedData = JSON.parse(atob(params.get('data')));
-            console.log(serializedData);
+            console.log('decoded', serializedData);
             setTemplateData({ data: serializedData, loading: false, error: null });
         } catch (error) {
             console.error('Error parsing data:', error);
@@ -28,17 +28,17 @@ function RenderSiteClientSide() {
 
     return (
         <>
-            <input 
+            <input
                 className='fileNameInput'
-                type="text" 
-                value={fileName} 
-                onChange={(e) => setFileName(e.target.value)} 
-                placeholder="Enter file name" 
+                type="text"
+                value={fileName}
+                onChange={(e) => setFileName(e.target.value)}
+                placeholder="Enter file name"
             />
             <button className='exportButton' onClick={() => TemplateExporter.downloadComponent(templateData.data, fileName)}>Export Site</button>
             {templateData.loading && <div>Loading...</div>}
             {templateData.error && <div>Error: {templateData.error.message}</div>}
-            {templateData.data && <PageRender templateData={templateData.data} updateComponentIndex={updateComponentIndex} />}
+            {templateData.data && <PageRender templateData={{ components: templateData.data.templates['index'] }} updateComponentIndex={updateComponentIndex} />}
         </>
     );
 }

@@ -3,21 +3,32 @@ import styles from '../styles.module.css';
 
 import { updateNestedState } from '../utils';
 
-export const PageEditor = ({ pages }) => {
+export const PageEditor = ({ pages, selectPage, addPage, removePage }) => {
     return (
         <div className={styles.selectedComponent}>
             <h4>All Pages</h4>
             <div className={styles.pageEditorMain}>
-                {pages.map((page, i) => (
-                    <div key={i} className={styles.pageLink}>
-                        <h5>{page.name}</h5>
-                        <p>{page.path}</p>
-                    </div>
-                ))}
+                {pages.map((page, i) => <PageEditorLink {...{ page, removePage, selectPage }} />)}
             </div>
+
+            <button onClick={() => addPage(`New Page ${pages.length}`, `/new-page-${pages.length}`)}>Add Page</button>
         </div>
     );
 }
+
+const PageEditorLink = ({ page, selectPage, removePage }) => {
+    const [hovering, setHovering] = useState(false);
+
+    return (
+        <div onClick={() => selectPage(page.templateId)} className={styles.pageLink} onMouseOver={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+            <div className={styles.pageLinkMeta}>
+                <h5>{page.name}</h5>
+                <p>{page.path}</p>
+            </div>
+
+            {hovering && <button onClick={() => removePage(page.templateId)}>Remove</button>}
+        </div>)
+};
 
 export const PropsEditor = ({
     selectedComponent = { component: { type: null, props: {} }, index: null },

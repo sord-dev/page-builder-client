@@ -8,10 +8,13 @@ function PageBuilder({
   template = [],
   updateTemplate = (prevTemplates) => { console.log(prevTemplates) },
   components = [],
-  updateTemplateItem = () => { console.log("Updateing template item") },
-  removeTemplateItem = () => { console.log("Removing template item") },
-  submitTemplate = (prevTemplates) => { console.log(prevTemplates) },
-  resetTemplate = () => { console.log('resetting template') }
+  updateTemplateItem = () => { },
+  removeTemplateItem = () => { },
+  submitTemplate = (templates) => { },
+  resetTemplate = () => { },
+  selectPage = (templateId) => { },
+  removePage = (templateId) => { },
+  addPage = (name, path) => { },
 }) {
   const [selectedComponent, setSelectedComponent] = React.useState(null);
   const [templateUpdated, setUpdated] = React.useState(false);
@@ -52,7 +55,15 @@ function PageBuilder({
         }}
       />
 
-      <TemplateEditor {...{ selectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent, pages }} />
+      <TemplateEditor {...{
+        selectedComponent,
+        updateTemplateItem,
+        removeTemplateItem: handleRemoveComponent,
+        pages,
+        selectPage,
+        addPage,
+        removePage
+      }} />
 
       <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate: appendComponent, components, pages }} />
     </div>
