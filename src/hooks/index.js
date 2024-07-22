@@ -43,6 +43,10 @@ export const useLinkBasedSiteBuilder = () => { // Hook that returns pageState an
         setPageState(prev => ({ ...prev, components: appState.components.index }));
     }, [appState]);
 
+    const overrideTemplate = ({ templates, pages }) => {
+        setPageState(prev => ({ ...prev, templates, pages }));
+    }
+
     const onComponentClick = (component, position = 'after', index = null) => {
         if (!component) throw new Error('No component provided');
         if (!['before', 'after'].includes(position)) throw new Error('Invalid position provided');
@@ -90,7 +94,7 @@ export const useLinkBasedSiteBuilder = () => { // Hook that returns pageState an
     };
 
     const removePage = (templateId) => {
-        if(pageState.pages.length === 1) return;
+        if (pageState.pages.length === 1) return;
         const newTemplates = { ...pageState.templates };
         delete newTemplates[templateId];
         setPageState(prev => ({
@@ -119,5 +123,6 @@ export const useLinkBasedSiteBuilder = () => { // Hook that returns pageState an
         removePage,
         selectPage,
         submitTemplate,
+        overrideTemplate
     };
 };

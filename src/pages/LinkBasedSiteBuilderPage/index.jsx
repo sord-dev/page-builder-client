@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { PageBuilder } from '../../components';
 import { useLinkBasedSiteBuilder } from '../../hooks';
+import { useSearchParams } from 'react-router-dom';
 
 function LinkBasedSiteBuilderPage() {
+    const [params] = useSearchParams();
+
     const {
         pageState,
         onComponentClick,
@@ -13,8 +16,19 @@ function LinkBasedSiteBuilderPage() {
         selectPage,
         removePage,
         submitTemplate,
+        overrideTemplate
     } = useLinkBasedSiteBuilder();
 
+    useEffect(() => {
+        if (params.get('cached')) {
+            const data = JSON.parse(atob(params.get('cached')));
+            console.log('decoded', data);
+            overrideTemplate(data);
+            
+            // clear the url to not trigger this effect again
+            window.history.pushState({}, document.title, window.location.pathname);
+        }
+    }, [params]);
 
     useEffect(() => {
         console.log(pageState);
