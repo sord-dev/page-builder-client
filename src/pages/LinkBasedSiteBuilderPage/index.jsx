@@ -19,12 +19,12 @@ function LinkBasedSiteBuilderPage() {
         overrideTemplate
     } = useLinkBasedSiteBuilder();
 
-    useEffect(() => {
+    useEffect(() => { // check if the url has a cached template and override the current template
         if (params.get('cached')) {
             const data = JSON.parse(atob(params.get('cached')));
             console.log('decoded', data);
             overrideTemplate(data);
-            
+
             // clear the url to not trigger this effect again
             window.history.pushState({}, document.title, window.location.pathname);
         }

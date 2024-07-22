@@ -66,16 +66,23 @@ const ComponentAppendMenu = ({ components, onSubmit }) => {
         setMenuState({ stage: 1, catagory, components: catagories[catagory] });
     }
 
+    const handleBackstep = () => {
+        setMenuState({ stage: 0, catagory: null, components: null });
+    }
+
     const steps = [
         <CatagoryStep {...{ catagories, handleCatagorySelect }} />,
-        <ComponentStep {...{ components: menuState.components, onSubmit }} />
+        <ComponentStep {...{ components: menuState.components, onSubmit, handleBackstep }} />
     ];
 
     return (
-        <div className={styles.appendList}>
-            <div className={styles['appendList-spacer']} />
-            {steps[menuState.stage]}
-        </div>
+        <>
+            {menuState.stage > 0 && <button onClick={handleBackstep}>Back</button>}
+            <div className={styles.appendList}>
+                <div className={styles['appendList-spacer']} />
+                {steps[menuState.stage]}
+            </div>
+        </>
     )
 }
 
@@ -91,7 +98,7 @@ const CatagoryStep = ({ catagories, handleCatagorySelect }) => {
     );
 }
 
-const ComponentStep = ({ components, onSubmit }) => {
+const ComponentStep = ({ components, onSubmit, handleBackstep }) => {
     const alphabeticalComponents = components.sort(item => item.type);
 
     return (
