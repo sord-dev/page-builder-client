@@ -3,21 +3,32 @@ import styles from '../styles.module.css';
 
 import { updateNestedState } from '../utils';
 
-const PageEditor = () => {
+export const PageEditor = ({ pages }) => {
     return (
-        <div>
-            <h1>Page Editor</h1>
+        <div className={styles.selectedComponent}>
+            <h4>All Pages</h4>
+            <div className={styles.pageEditorMain}>
+                
+            </div>
         </div>
     );
 }
 
 export const PropsEditor = ({
     selectedComponent = { component: { type: null, props: {} }, index: null },
-    setSelectedComponent = () => console.log('setSelectedComponent not provided'),
     updateTemplateItem = () => console.log('updateTemplateItem not provided'),
     removeTemplateItem = () => console.log('removeTemplateItem not provided')
 }) => { // Used to render the props editor for the selected component
-    if (selectedComponent == null) return 'No component selected';
+    if (selectedComponent == null) {
+        return (
+            <div className={styles.selectedComponent}>
+                <p>Select a component to edit</p>
+                <div className={styles.propEditorMain}>
+                    No component selected
+                </div>
+            </div>
+        );
+    };
     const { component: { type, props }, index } = selectedComponent;
 
     const [localProps, setLocalProps] = useState(props);
@@ -42,7 +53,9 @@ export const PropsEditor = ({
 
     return (
         <div className={styles.selectedComponent}>
-            <PropsEditorMeta setSelectedComponent={setSelectedComponent} componentName={type} />
+            <div className={styles['heading']}>
+                <h5>{type}</h5>
+            </div>
 
             <div className={styles.propEditorMain}>
                 {Object.keys(localProps).map(key => <PropertyEditor key={key} keyName={key} value={localProps[key]} handleChange={handleChange} />)}
@@ -55,19 +68,6 @@ export const PropsEditor = ({
         </div>
     );
 };
-
-const PropsEditorMeta = ({ setSelectedComponent, componentName }) => {
-    return (
-        <>
-            <div className={styles['heading']}>
-                Props Editor
-                <button onClick={() => setSelectedComponent(null)}>&times;</button>
-            </div>
-
-            <h5>{componentName}</h5>
-        </>
-    )
-}
 
 const PropertyEditor = ({ keyName, value, handleChange }) => ( // Used to render the props of the selected component
     <div className={styles.propEditor}>

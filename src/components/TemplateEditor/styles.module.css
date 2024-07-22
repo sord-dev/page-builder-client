@@ -24,7 +24,8 @@
 
 
 
-.propEditorMain {
+.propEditorMain,
+.pageEditorMain {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -56,6 +57,11 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.heading > h5 {
+    margin-top: 12px;
+    font-size: 1.2em;
 }
 
 .heading > button {

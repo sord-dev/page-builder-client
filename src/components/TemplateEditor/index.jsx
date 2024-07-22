@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.module.css';
 
-import { PropsEditor } from './partials';
+import { PageEditor, PropsEditor } from './partials';
 import { validTabs } from './utils';
 
 const TemplateEditor = ({
@@ -20,14 +20,17 @@ const TemplateEditor = ({
         setEditorState(prev => ({ ...prev, tab }));
     }
 
+    useEffect(() => {
+        if(selectedComponent) setEditorState(prev => ({ ...prev, tab: 'props' }));
+    }, [selectedComponent]);
+
     const TemplateEditorMap = {
         props: <PropsEditor
             selectedComponent={selectedComponent}
-            setSelectedComponent={setSelectedComponent}
             updateTemplateItem={updateTemplateItem}
             removeTemplateItem={removeTemplateItem}
         />,
-        pages: <div>Pages</div>
+        pages: <PageEditor />
     }
 
 
