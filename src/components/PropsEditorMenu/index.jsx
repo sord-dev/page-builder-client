@@ -2,37 +2,52 @@ import React from 'react';
 import styles from './styles.module.css';
 
 import { PropsEditor } from './partials';
+import { validTabs } from './utils';
 
-const PropsEditorMenu = ({
+const TemplateEditor = ({
     selectedComponent = null,
     updateTemplateItem = () => { console.log("Updating template item") },
     removeTemplateItem = () => { console.log("Removing template item") },
     setSelectedComponent = () => { console.log("Setting selected component") }
 }) => {
+    const [editorState, setEditorState] = React.useState({ tab: 'props' });
+
+    const handleTabChange = (tab) => {
+        if (!validTabs.includes(tab)) {
+            throw new Error('Invalid tab provided');
+        }
+
+        setEditorState(prev => ({ ...prev, tab }));
+    }
+
+    const TemplateEditorMap = {
+        props: <PropsEditor
+            selectedComponent={selectedComponent}
+            setSelectedComponent={setSelectedComponent}
+            updateTemplateItem={updateTemplateItem}
+            removeTemplateItem={removeTemplateItem}
+        />,
+        pages: <div>Pages</div>
+    }
+
+
     return (
         <div className={styles.componentStateEditor}>
-            {selectedComponent ? (
-                <div className={styles.selectedComponent}>
-                    <div className={styles['heading']}>
-                        <h4>Selected Component</h4>
-                        <button onClick={() => setSelectedComponent(null)}>&times;</button>
-                    </div>
-                    <h2>{selectedComponent.component.type}</h2>
-                    <p>Props</p>
+            <div>
+                {validTabs.map(tab => (
+                    <button
+                        key={tab}
+                        onClick={() => handleTabChange(tab)}
+                        className={editorState.tab === tab ? styles.active : ''}
+                    >
+                        {tab}
+                    </button>
+                ))}
+            </div>
 
-                    <PropsEditor
-                        type={selectedComponent.component.type}
-                        props={selectedComponent.component.props}
-                        index={selectedComponent.index}
-                        updateTemplateItem={updateTemplateItem}
-                        removeTemplateItem={removeTemplateItem}
-                    />
-                </div>
-            ) : (
-                <div>No component selected</div>
-            )}
+            {TemplateEditorMap[editorState.tab]}
         </div>
     );
 };
 
-export default PropsEditorMenu;
+export default TemplateEditor;

@@ -1,41 +1,39 @@
 .componentStateEditor {
     position: fixed;
     z-index: 1000;
-    top: 26px;
-    right: 26px;
+
+    top: 0;
+    left: 0;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-    max-width: 1200px;
+
+    max-width: 400px;
+    width: 330px;
+    height: 100vh;
 
     opacity: .4;
 
     background-color: black;
-    border-radius: 6px;
     padding: 6px 12px;
 
     transition: opacity .3s;
 }
 
-.componentStateEditor {
-    top: 26px;
-    right: unset;
-    bottom: 26px;
-    left: 26px;
-    padding: 6px 12px;
-}
 
 
 .propEditorMain {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
+
+    font-size: .8em;
 }
 
 .propEditor {
@@ -100,4 +98,11 @@
     color: #333;
 
     width: max-content;
+}
+
+.props-editor-subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-decoration: underline;
 }

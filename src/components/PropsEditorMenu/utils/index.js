@@ -1,3 +1,5 @@
+export const validTabs = ['pages', 'props'];
+
 export const updateNestedState = (prevState, name, value, itemIndex = null, subKey = null) => {
     if (itemIndex !== null && subKey !== null) { // If the itemIndex and subKey are not null, then we are updating a nested state
         return { 
