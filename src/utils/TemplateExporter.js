@@ -16,9 +16,14 @@ class TemplateExporter {
         return this.buildComponentString(fileName, importStatements, componentJSX);
     }
 
-    static downloadComponent(templateData, fileName = 'Component') {
+    static downloadComponentZip(templateData, fileName = 'Component') {
         const componentStr = this.generateComponent(templateData, fileName);
         this.createZipAndDownload(componentStr, fileName);
+    }
+
+    static downloadComponentFile(templateData, fileName = 'Component') {
+        const componentStr = this.generateComponent(templateData, fileName);
+        this.createFileAndDownload(componentStr, fileName);
     }
 
     static validateTemplateData(templateData) {
@@ -54,6 +59,11 @@ ${componentJSX.join('\n')}
 
         const blob = await zip.generateAsync({ type: "blob" });
         saveAs(blob, `${fileName}.zip`);
+    }
+
+    static async createFileAndDownload(content, fileName) {
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, `${fileName}.js`);
     }
 }
 

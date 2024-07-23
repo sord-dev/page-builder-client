@@ -10,14 +10,16 @@
     align-items: center;
 }
 
+.FileExportForm select {
+    width: 200px;
+    padding: 4px 8px;
+}
+
 .exportButton {
     width: 200px;
 }
 
 .fileNameInput {
-    position: fixed;
-    bottom: 78px;
-    right: 26px;
     z-index: 999;
     width: 200px;
 }
