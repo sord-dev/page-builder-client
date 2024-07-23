@@ -58,10 +58,11 @@ export default PageBuilder;
 
 # Backlog
 
+- ~~ catagorising components~~
+- ~~ adding multi-page support ~~
 - adding more components
--~~ catagorising components~~
 - fleshing out appending components to the page
-- **adding multi-page support** 
 - integrate backend (link shortner)
-- flesh out export functionality (fully zipped react websites)
-- look into nextjs conversions
+- flesh out export functionality
+  - fully zipped react websites
+  - look into nextjs conversions
