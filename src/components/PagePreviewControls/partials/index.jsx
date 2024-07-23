@@ -1,19 +1,25 @@
 import React from 'react'
 
 import styles from '../styles.module.css'
-import { TemplateExporter } from '../../../utils'
 
-export const FileExportForm = ({ setFileName, fileName }) => {
+export const FileExportForm = ({ setFileName, fileName, submitForm }) => {
     return (
-        <form className={styles['FileExportForm']}>
+        <form className={styles['FileExportForm']} onSubmit={(e) => submitForm(e)}>
             <input
                 className={styles['fileNameInput']}
                 type="text"
+                name="fileName"
                 value={fileName}
                 onChange={(e) => setFileName(e.target.value)}
                 placeholder="Enter file name"
             />
-            <button className={styles['exportButton']} onClick={() => TemplateExporter.downloadComponent(templateData.data, fileName)}>Export Site</button>
+
+            <select name="export-dropdown">
+                <option onClick={() => savePageAsJSX} value={'page-jsx'}>Page as JSX</option>
+                <option onClick={() => saveSiteAsZip} value={'site-zip'}>Site as ZIP</option>
+            </select>
+
+            <button className={styles['exportButton']} type='submit'>Submit</button>
         </form>
     )
 }

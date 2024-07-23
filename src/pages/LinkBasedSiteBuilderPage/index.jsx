@@ -4,8 +4,6 @@ import { useLinkBasedSiteBuilder } from '../../hooks';
 import { useSearchParams } from 'react-router-dom';
 
 function LinkBasedSiteBuilderPage() {
-    const [params] = useSearchParams();
-
     const {
         pageState,
         onComponentClick,
@@ -19,9 +17,10 @@ function LinkBasedSiteBuilderPage() {
         overrideTemplate
     } = useLinkBasedSiteBuilder();
 
+    const [params] = useSearchParams();
     useEffect(() => { // check if the url has a cached template and override the current template
         if (params.get('cached')) {
-            const data = JSON.parse(atob(params.get('cached')));
+            const data = JSON.parse(atob(params.get('cached'))); // TODO - Validate the data, maybe use a library like jsonschema, handle errors
             console.log('decoded', data);
             overrideTemplate(data);
 
