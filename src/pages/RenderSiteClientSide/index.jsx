@@ -47,6 +47,7 @@ function RenderSiteClientSide() {
 
     const downloadSiteAsZip = () => {
         console.log('downloading site as zip', templateData.data);
+        TemplateExporter.downloadProjectZip(templateData.data);
     }
 
     const submitExportForm = (e) => {

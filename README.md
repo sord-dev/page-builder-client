@@ -52,14 +52,14 @@ export default PageBuilder;
 ## Approach Limitations 
 
 - Very large url parameters
-- Cannot handle nested compoents
-- Cannot handle generic compoennts (at the moment)
-- Dependant on defaultProps property within react ()
+- Cannot handle nested components
+- Cannot handle generic components (at the moment)
+- Dependant on defaultProps property within react (to be depreciated)
 
 # Backlog
 
-- ~~ catagorising components~~
-- ~~ adding multi-page support ~~
+- ~~catagorising components~~
+- ~~adding multi-page support~~
 - adding more components
 - fleshing out appending components to the page
 - integrate backend (link shortner)

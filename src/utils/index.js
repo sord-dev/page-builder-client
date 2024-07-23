@@ -5,8 +5,6 @@ export const returnAllComponentNames = () => {
         .map(key => ({ type: key, props: library[key].defaultProps || {} }));
 };
 
-export { LinkBuilder } from './LinkBuilder';
-
 export const reduceComponentsByTags = (components) => {
     if (!components.length) return;
     return components.reduce((acc, c) => {
@@ -29,6 +27,5 @@ export const reduceComponentsByTags = (components) => {
     }, {});
 };
 
-import TemplateExporter from './TemplateExporter';
-import { LinkBuilder } from './LinkBuilder';
-export { TemplateExporter }; // Export TemplateExporter util class
+export { LinkBuilder } from './LinkBuilder';
+export { default as TemplateExporter } from './TemplateExporter' // Export TemplateExporter util class
