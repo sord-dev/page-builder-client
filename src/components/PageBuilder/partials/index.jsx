@@ -68,10 +68,21 @@ const RenderComponentCatagory = ({ catagory, components, updateTemplate }) => {
 }
 
 const ComponentButton = ({ component, updateTemplate }) => {
+    const Icon = component.props._icon;
     return (
-        <button onClick={() => updateTemplate(component)}>{component.type}</button>
+        <>
+            <button onClick={() => updateTemplate(component)}>
+                {Icon ? (
+                    <Icon />
+                ) : (
+                    component.type
+                )}
+            </button>
+            {Icon && <span>{component.type}</span>}
+        </>
     );
 };
+
 
 // PREVIEW MENU PARTIALS
 
