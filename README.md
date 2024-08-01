@@ -53,7 +53,6 @@ export default PageBuilder;
 
 - Very large url parameters
 - Cannot handle nested components
-- Cannot handle generic components (at the moment)
 - Dependant on defaultProps property within react (to be depreciated)
 
 # Backlog
@@ -64,5 +63,5 @@ export default PageBuilder;
 - fleshing out appending components to the page
 - integrate backend (link shortner)
 - flesh out export functionality
-  - fully zipped react websites
+  - **fully zipped react websites**
   - look into nextjs conversions

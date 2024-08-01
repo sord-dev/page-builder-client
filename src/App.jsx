@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { Route, Routes } from 'react-router-dom';
-import { RenderSite, RenderSiteClientSide, LinkBasedSiteBuilderPage } from './pages';
+import { RenderSiteClientSide, LinkBasedSiteBuilderPage } from './pages';
 import { useAppContext } from './context/appContext';
 import { returnAllComponentNames } from './utils';
 
