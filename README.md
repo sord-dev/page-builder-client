@@ -7,7 +7,7 @@ Then imports all components from a url library and renders them out. Only allows
 
 ```js
 import React, { useState, useEffect } from 'react';
-import * as library from "../../lib/component-lib"
+import * as library from "../../lib/component-lib" // library providing custom component library module (bundled using rollup)
 
 function PageBuilder({ templateData, updateComponentIndex }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
