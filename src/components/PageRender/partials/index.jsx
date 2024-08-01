@@ -8,8 +8,8 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
     const handleHover = () => { setHovering(true); };
     const handleLeave = () => { setHovering(false); };
 
-    const handleAppendComponent = (component, position) => {
-        appendComponent(component, position);
+    const handleAppendComponent = (component, position, index) => {
+        appendComponent(component, position, index);
     }
 
     if (!ComponentElement) {
@@ -23,7 +23,7 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
     return (
         <div className={`${styles['componentWrapper']}`} onMouseOver={handleHover} onMouseLeave={handleLeave}>
             {hovering && editable && (<AppendComponentButton
-                onSubmit={(result) => handleAppendComponent(result, 'before')}
+                onSubmit={(result) => handleAppendComponent(result, 'before', index)}
                 {...{ components }}
             />)}
 
@@ -33,7 +33,7 @@ export const ComponentWrapper = ({ ComponentElement, componentRefs, editable = f
                 {ComponentElement}
             </div>
             {hovering && editable && (<AppendComponentButton
-                onSubmit={(result) => handleAppendComponent(result, 'after')}
+                onSubmit={(result) => handleAppendComponent(result, 'after', index)}
                 {...{ components }}
             />)}
         </div>
@@ -66,16 +66,23 @@ const ComponentAppendMenu = ({ components, onSubmit }) => {
         setMenuState({ stage: 1, catagory, components: catagories[catagory] });
     }
 
+    const handleBackstep = () => {
+        setMenuState({ stage: 0, catagory: null, components: null });
+    }
+
     const steps = [
         <CatagoryStep {...{ catagories, handleCatagorySelect }} />,
-        <ComponentStep {...{ components: menuState.components, onSubmit }} />
+        <ComponentStep {...{ components: menuState.components, onSubmit, handleBackstep }} />
     ];
 
     return (
-        <div className={styles.appendList}>
-            <div className={styles['appendList-spacer']} />
-            {steps[menuState.stage]}
-        </div>
+        <>
+            {menuState.stage > 0 && <button onClick={handleBackstep}>Back</button>}
+            <div className={styles.appendList}>
+                <div className={styles['appendList-spacer']} />
+                {steps[menuState.stage]}
+            </div>
+        </>
     )
 }
 
@@ -91,7 +98,7 @@ const CatagoryStep = ({ catagories, handleCatagorySelect }) => {
     );
 }
 
-const ComponentStep = ({ components, onSubmit }) => {
+const ComponentStep = ({ components, onSubmit, handleBackstep }) => {
     const alphabeticalComponents = components.sort(item => item.type);
 
     return (

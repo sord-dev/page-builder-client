@@ -7,7 +7,7 @@ Then imports all components from a url library and renders them out. Only allows
 
 ```js
 import React, { useState, useEffect } from 'react';
-import * as library from "../../lib/component-lib"
+import * as library from "../../lib/component-lib" // library providing custom component library module (bundled using rollup)
 
 function PageBuilder({ templateData, updateComponentIndex }) {
   const [template, setTemplate] = useState(templateData || { components: [] });
@@ -52,16 +52,16 @@ export default PageBuilder;
 ## Approach Limitations 
 
 - Very large url parameters
-- Cannot handle nested compoents
-- Cannot handle generic compoennts (at the moment)
-- Dependant on defaultProps property within react ()
+- Cannot handle nested components
+- Dependant on defaultProps property within react (to be depreciated)
 
 # Backlog
 
+- ~~catagorising components~~
+- ~~adding multi-page support~~
 - adding more components
--~~ catagorising components~~
 - fleshing out appending components to the page
-- **adding multi-page support** 
 - integrate backend (link shortner)
-- flesh out export functionality (fully zipped react websites)
-- look into nextjs conversions
+- flesh out export functionality
+  - **fully zipped react websites**
+  - look into nextjs conversions

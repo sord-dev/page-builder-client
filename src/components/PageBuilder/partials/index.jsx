@@ -68,14 +68,25 @@ const RenderComponentCatagory = ({ catagory, components, updateTemplate }) => {
 }
 
 const ComponentButton = ({ component, updateTemplate }) => {
+    const Icon = component.props._icon;
     return (
-        <button onClick={() => updateTemplate(component)}>{component.type}</button>
+        <>
+            <button onClick={() => updateTemplate(component)}>
+                {Icon ? (
+                    <Icon />
+                ) : (
+                    component.type
+                )}
+            </button>
+            {Icon && <span>{component.type}</span>}
+        </>
     );
 };
 
+
 // PREVIEW MENU PARTIALS
 
-export const PreviewMenu = ({ template, handleComponentClick, updateTemplate, components }) => {
+export const PreviewMenu = ({ template, pages, handleComponentClick, updateTemplate, components }) => {
     return (
         <PageRender
             templateData={{ components: template }}

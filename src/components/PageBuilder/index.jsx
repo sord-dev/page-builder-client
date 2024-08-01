@@ -4,13 +4,17 @@ import { ComponentsPicker, PreviewMenu } from './partials';
 import TemplateEditor from '../TemplateEditor'; // internal component
 
 function PageBuilder({
+  pages = [],
   template = [],
   updateTemplate = (prevTemplates) => { console.log(prevTemplates) },
   components = [],
-  updateTemplateItem = () => { console.log("Updateing template item") },
-  removeTemplateItem = () => { console.log("Removing template item") },
-  submitTemplate = (prevTemplates) => { console.log(prevTemplates) },
-  resetTemplate = () => { console.log('resetting template') }
+  updateTemplateItem = () => { },
+  removeTemplateItem = () => { },
+  submitTemplate = (templates) => { },
+  resetTemplate = () => { },
+  selectPage = (templateId) => { },
+  removePage = (templateId) => { },
+  addPage = (name, path) => { },
 }) {
   const [selectedComponent, setSelectedComponent] = React.useState(null);
   const [templateUpdated, setUpdated] = React.useState(false);
@@ -27,6 +31,11 @@ function PageBuilder({
   const handleRemoveComponent = (index) => {
     removeTemplateItem(index)
     setSelectedComponent(null)
+  }
+
+  const appendComponent = (component, position, index = null) => {
+    updateTemplate(component, position, index)
+    setSelectedComponent({ component, index })
   }
 
   useEffect(() => {
@@ -46,9 +55,17 @@ function PageBuilder({
         }}
       />
 
-      <TemplateEditor {...{ selectedComponent, setSelectedComponent, updateTemplateItem, removeTemplateItem: handleRemoveComponent }} />
+      <TemplateEditor {...{
+        selectedComponent,
+        updateTemplateItem,
+        removeTemplateItem: handleRemoveComponent,
+        pages,
+        selectPage,
+        addPage,
+        removePage
+      }} />
 
-      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate, components }} />
+      <PreviewMenu {...{ template, handleComponentClick: selectComponent, updateTemplate: appendComponent, components, pages }} />
     </div>
   );
 }

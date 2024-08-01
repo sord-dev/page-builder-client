@@ -14,7 +14,7 @@
     width: 330px;
     height: 100vh;
 
-    opacity: .4;
+    opacity: .8;
 
     background-color: black;
     padding: 6px 12px;
@@ -28,7 +28,7 @@
 .pageEditorMain {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
@@ -111,4 +111,57 @@
     font-weight: 600;
     margin-bottom: 10px;
     text-decoration: underline;
+}
+
+.template-editor-tabs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    font-size: .8em;
+    margin-bottom: 6px;
+}
+
+.template-editor-tabs > button {
+    padding: 4px 8px;
+    border: none;
+    background-color: #111111;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pageEditorMain {
+    margin-bottom: 12px;
+}
+
+.pageLink {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+
+    cursor: pointer;
+}
+
+.pageLink button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1em;
+
+}
+
+.pageLinkMeta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageLink:hover {
+    background-color: #333;
 }

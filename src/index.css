@@ -84,22 +84,6 @@ body, #root {
   width: 100%;
 }
 
-.exportButton {
-  position: fixed;
-  bottom: 26px;
-  right: 26px;
-  z-index: 999;
-  width: 200px;
-}
-
-.fileNameInput {
-  position: fixed;
-  bottom: 78px;
-  right: 26px;
-  z-index: 999;
-  width: 200px;
-}
-
 .site-builder {
   display: flex;
   padding: 0 4rem;
